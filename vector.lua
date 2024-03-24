@@ -57,6 +57,16 @@ function Vector:mag()
     return math.sqrt(self.x * self.x + self.y * self.y + self.z * self.z)
 end
 
+-- set the magnitude of the vector
+--@param m the magnitude to set
+function Vector:setMag(m)
+    self:normalize()
+    -- multiply by the magnitude
+    self.x = self.x * m
+    self.y = self.y * m
+    self.z = self.z * m
+end
+
 --- get the magnitude of the vector squared
 function Vector:magSq()
     return self.x * self.x + self.y * self.y + self.z * self.z
@@ -174,3 +184,5 @@ function Vector.random3D()
     local vy = math.sqrt(1 - vz * vz) * math.sin(angle)
     return Vector(vx, vy, vz)
 end
+
+return Vector
