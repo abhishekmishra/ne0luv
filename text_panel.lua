@@ -4,13 +4,13 @@
 -- author: Abhishek Mishra
 
 -- Require the middleclass library
-local class = require('lib/middleclass')
+local Class = require('middleclass')
 
 -- Require the Panel class
 local Panel = require('Panel')
 
 -- Define the TextPanel class that extends the Panel class
-TextPanel = class('TextPanel', Panel)
+TextPanel = Class('TextPanel', Panel)
 
 -- Constructor for the TextPanel class
 function TextPanel:initialize(x, y, width, height, text, font)
