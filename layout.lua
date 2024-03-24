@@ -8,11 +8,11 @@ local class = require('lib/middleclass')
 -- Require the Panel class
 local Panel = require('Panel')
 
--- Define the LayoutPanel class that extends the Panel class
-LayoutPanel = class('LayoutPanel', Panel)
+-- Define the Layout class that extends the Panel class
+Layout = class('Layout', Panel)
 
--- Constructor for the LayoutPanel class
-function LayoutPanel:initialize(x, y, width, height, layout, bgColor)
+-- Constructor for the Layout class
+function Layout:initialize(x, y, width, height, layout, bgColor)
     Panel.initialize(self, x, y, width, height)
     self.layout = layout or 'row' -- Default layout is 'row'
     self.bgColor = bgColor or {0, 0, 0, 1} -- Default fill color is black
@@ -20,22 +20,22 @@ function LayoutPanel:initialize(x, y, width, height, layout, bgColor)
 end
 
 -- Method to add a child component
-function LayoutPanel:addChild(child)
+function Layout:addChild(child)
     table.insert(self.children, child)
 end
 
 -- Get children
-function LayoutPanel:getChildren()
+function Layout:getChildren()
     return self.children
 end
 
 -- Method to set the background color for the panel
-function LayoutPanel:setBGColor(color)
+function Layout:setBGColor(color)
     self.bgColor = color
 end
 
 -- show method
-function LayoutPanel:show()
+function Layout:show()
     -- Iterate over child components and show them
     local startPos = 0
     for _, child in ipairs(self.children) do
@@ -52,7 +52,7 @@ function LayoutPanel:show()
 end
 
 -- hide method
-function LayoutPanel:hide()
+function Layout:hide()
     -- Iterate over child components and hide them
     for _, child in ipairs(self.children) do
         child:hide()
@@ -60,7 +60,7 @@ function LayoutPanel:hide()
 end
 
 -- Override the _draw method
-function LayoutPanel:_draw()
+function Layout:_draw()
     -- Draw the background
     love.graphics.setColor(self.bgColor)
     love.graphics.rectangle('fill', 0, 0, self.width, self.height)
@@ -81,7 +81,7 @@ function LayoutPanel:_draw()
 end
 
 -- Override the update method
-function LayoutPanel:update(dt)
+function Layout:update(dt)
     -- Iterate over child components and update them
     for _, child in ipairs(self.children) do
         child:update(dt)
@@ -89,7 +89,7 @@ function LayoutPanel:update(dt)
 end
 
 -- Override the keypressed method
-function LayoutPanel:keypressed(key)
+function Layout:keypressed(key)
     -- Iterate over child components and pass the keypress event
     for _, child in ipairs(self.children) do
         child:keypressed(key)
@@ -97,8 +97,8 @@ function LayoutPanel:keypressed(key)
 end
 
 -- Override the mousepressed method
-function LayoutPanel:_mousepressed(x, y, button, istouch, presses)
-    -- print("LayoutPanel:_mousepressed [" .. x .. ", " .. y .. "]")
+function Layout:_mousepressed(x, y, button, istouch, presses)
+    -- print("Layout:_mousepressed [" .. x .. ", " .. y .. "]")
     -- Iterate over child components and pass the mousepress event
     for _, child in ipairs(self.children) do
         child:mousepressed(x, y, button, istouch, presses)
@@ -106,7 +106,7 @@ function LayoutPanel:_mousepressed(x, y, button, istouch, presses)
 end
 
 -- Override the mousereleased method
-function LayoutPanel:_mousereleased(x, y, button, istouch, presses)
+function Layout:_mousereleased(x, y, button, istouch, presses)
     -- Iterate over child components and pass the mouserelease event
     for _, child in ipairs(self.children) do
         child:mousereleased(x, y, button, istouch, presses)
@@ -114,12 +114,12 @@ function LayoutPanel:_mousereleased(x, y, button, istouch, presses)
 end
 
 -- Override the mousemoved method
-function LayoutPanel:_mousemoved(x, y, dx, dy, istouch)
-    -- print("LayoutPanel:_mousemoved [" .. x .. ", " .. y .. "]")
+function Layout:_mousemoved(x, y, dx, dy, istouch)
+    -- print("Layout:_mousemoved [" .. x .. ", " .. y .. "]")
     -- Iterate over child components and pass the mousemove event
     for _, child in ipairs(self.children) do
         child:mousemoved(x, y, dx, dy, istouch)
     end
 end
 
-return LayoutPanel
+return Layout
