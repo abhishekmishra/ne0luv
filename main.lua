@@ -14,14 +14,22 @@ function love.load()
         topConfig
     )
     for i = 1, 3 do
-        top:addChild(
-            Layout(
-                Rect(0, 0, 100, 100),
+        local lp = Layout(
+            Rect(0, 0, 100, 100),
+            {
+                bgColor = { 0, 0, 0.2 * i, 1 }
+            }
+        )
+        for j = 1, 3 do
+            local sp = Layout(
+                Rect(0, 0, 33, 33),
                 {
-                    bgColor = { 0, 0, 0.2 * i, 1 }
+                    bgColor = { 0, 0.2 * j, 0, 1 }
                 }
             )
-        )
+            lp:addChild(sp)
+        end
+        top:addChild(lp)
     end
     top:show()
 end
