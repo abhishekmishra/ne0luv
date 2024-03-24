@@ -8,7 +8,7 @@
 -- author: Abhishek Mishra
 -- license: MIT, see LICENSE for more details.
 
-local class = require('lib/middleclass')
+local class = require('middleclass')
 
 --- Vector class
 local Vector = class('Vector')

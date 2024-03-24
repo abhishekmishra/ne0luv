@@ -2,7 +2,7 @@
 --
 -- date: 17/02/2024
 -- author: Abhishek Mishra
-local class = require('lib/middleclass')
+local class = require('middleclass')
 local Panel = require('panel')
 
 --- Button class

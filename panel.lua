@@ -4,7 +4,7 @@
 -- author: Abhishek Mishra
 
 -- Require the middleclass library
-local class = require('lib/middleclass')
+local class = require('middleclass')
 
 -- Define the Panel class
 Panel = class('Panel')

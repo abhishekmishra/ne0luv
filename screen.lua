@@ -3,7 +3,7 @@
 -- date: 16/02/2024
 -- author: Abhishek Mishra
 
-local class = require('lib/middleclass')
+local class = require('middleclass')
 
 local Screen = class('Screen')
 
