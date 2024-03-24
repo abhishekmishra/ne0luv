@@ -18,9 +18,25 @@ local Vector = class('Vector')
 --@param y the y component of the vector
 --@param z the z component of the vector
 function Vector:initialize(x, y, z)
-    self.x = x or 0
-    self.y = y or 0
-    self.z = z or 0
+    self:set(x or 0, y or 0, z or 0)
+end
+
+--- set the x, y, z components of the vector
+--@param x the x component of the vector
+--@param y the y component of the vector
+--@param z the z component of the vector
+function Vector:set(x, y, z)
+    self.x = x
+    self.y = y
+    self.z = z
+
+    -- width and height aliases
+    self.w = x
+    self.h = y
+
+    -- u and v aliases
+    self.u = x
+    self.v = y
 end
 
 --- copy the vector
@@ -62,9 +78,7 @@ end
 function Vector:setMag(m)
     self:normalize()
     -- multiply by the magnitude
-    self.x = self.x * m
-    self.y = self.y * m
-    self.z = self.z * m
+    self:set(self.x * m, self.y * m, self.z * m)
 end
 
 --- get the magnitude of the vector squared
@@ -98,9 +112,7 @@ end
 function Vector:normalize()
     local m = self:mag()
     if m > 0 then
-        self.x = self.x / m
-        self.y = self.y / m
-        self.z = self.z / m
+        self:set(self.x / m, self.y / m, self.z / m)
     end
 end
 
