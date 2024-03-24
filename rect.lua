@@ -29,4 +29,20 @@ function Rect:getY()
     return self.pos.y
 end
 
+function Rect:setX(x)
+    self.pos.x = x
+end
+
+function Rect:setY(y)
+    self.pos.y = y
+end
+
+function Rect:setWidth(w)
+    self.dim.w = w
+end
+
+function Rect:setHeight(h)
+    self.dim.h = h
+end
+
 return Rect

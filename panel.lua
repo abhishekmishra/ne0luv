@@ -19,8 +19,15 @@ Panel = Class('Panel')
 --@param dim the dimensions of the panel
 function Panel:initialize(rect)
     self.rect = rect or Rect(0, 0, PANEL_DEFAULT_WIDTH, PANEL_DEFAULT_HEIGHT)
-    self.translateX = 0
-    self.translateY = 0
+    self.parent = nil
+end
+
+function Panel:setParent(parent)
+    self.parent = parent
+end
+
+function Panel:getParent()
+    return self.parent
 end
 
 -- Lifecycle methods
@@ -40,14 +47,8 @@ end
 -- Subclasses should override the _draw method
 function Panel:draw()
     love.graphics.push()
-    -- love.graphics.translate(self.x, self.y)
     self:_draw()
     love.graphics.pop()
-end
-
-function Panel:screenToWorld(sx, sy)
-    -- print(sx, sy, self.translateX, self.translateY)
-    return sx - self.translateX, sy - self.translateY
 end
 
 function Panel:_draw()
@@ -59,9 +60,8 @@ function Panel:keypressed(key)
 end
 
 function Panel:mousepressed(x, y, button, istouch, presses)
-    local wx, wy = self:screenToWorld(x, y)
-    if wx >= 0 and wx <= self.rect:getWidth() and wy >= 0 and wy <= self.rect:getHeight() then
-        self:_mousepressed(wx, wy, button, istouch, presses)
+    if self.rect:contains(x, y) then
+        self:_mousepressed(x, y, button, istouch, presses)
     end
 end
 
@@ -69,9 +69,8 @@ function Panel:_mousepressed(x, y, button, istouch, presses)
 end
 
 function Panel:mousereleased(x, y, button, istouch, presses)
-    local wx, wy = self:screenToWorld(x, y)
-    if wx >= 0 and wx <= self.rect:getWidth() and wy >= 0 and wy <= self.rect:getHeight() then
-        self:_mousereleased(wx, wy, button, istouch, presses)
+    if self.rect:contains(x, y) then
+        self:_mousereleased(x, y, button, istouch, presses)
     end
 end
 
@@ -79,9 +78,8 @@ function Panel:_mousereleased(x, y, button, istouch, presses)
 end
 
 function Panel:mousemoved(x, y, dx, dy, istouch)
-    local wx, wy = self:screenToWorld(x, y)
-    if wx >= 0 and wx <= self.rect:getWidth() and wy >= 0 and wy <= self.rect:getHeight() then
-        self:_mousemoved(wx, wy, dx, dy, istouch)
+    if self.rect:contains(x, y) then
+        self:_mousemoved(x, y, dx, dy, istouch)
     else
         self:_mouseout()
     end
@@ -99,6 +97,22 @@ end
 
 function Panel:getHeight()
     return self.rect:getHeight()
+end
+
+function Panel:getX()
+    return self.rect:getX()
+end
+
+function Panel:getY()
+    return self.rect:getY()
+end
+
+function Panel:setX(x)
+    self.rect:setX(x)
+end
+
+function Panel:setY(y)
+    self.rect:setY(y)
 end
 
 return Panel

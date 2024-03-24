@@ -24,8 +24,71 @@ function Layout:initialize(rect, config)
 end
 
 -- Method to add a child component
-function Layout:addChild(child)
-    table.insert(self.children, child)
+function Layout:addChild(c)
+    table.insert(self.children, c)
+
+    -- Set the parent of the child to this layout
+    c:setParent(self)
+
+    -- set the position of the child based on layout, and the size of the children
+
+    -- if layout is row
+    if self.layout == 'row' then
+        local startPos = 0
+        for _, child in ipairs(self.children) do
+            child:setX(startPos)
+            startPos = startPos + child:getWidth()
+        end
+    else -- layout is column
+        local startPos = 0
+        for _, child in ipairs(self.children) do
+            child:setY(startPos)
+            startPos = startPos + child:getHeight()
+        end
+    end
+
+end
+
+function Layout:setX(x)
+    -- set the x position of the layout
+    local prevX = self:getX()
+    self.rect:setX(x)
+    local diff = x - prevX
+    -- update the x position of all the children
+    -- if layout is row
+    if self.layout == 'row' then
+        -- adjust the x position of all the children
+        for _, child in ipairs(self.children) do
+            child:setX(child:getX() + diff)
+        end
+    end
+    if self.layout == 'column' then
+        -- adjust the x position of all the children
+        for _, child in ipairs(self.children) do
+            child:setX(self:getX())
+        end
+    end
+end
+
+function Layout:setY(y)
+    -- set the y position of the layout
+    local prevY = self:getY()
+    self.rect:setY(y)
+    local diff = y - prevY
+    -- update the y position of all the children
+    -- if layout is row
+    if self.layout == 'row' then
+        -- adjust the y position of all the children
+        for _, child in ipairs(self.children) do
+            child:setY(self:getY())
+        end
+    end
+    if self.layout == 'column' then
+        -- adjust the y position of all the children
+        for _, child in ipairs(self.children) do
+            child:setY(child:getY() + diff)
+        end
+    end
 end
 
 -- Get children
@@ -43,14 +106,6 @@ function Layout:show()
     -- Iterate over child components and show them
     local startPos = 0
     for _, child in ipairs(self.children) do
-        if self.layout == 'row' then
-            child.translateX = child.translateX + startPos
-            startPos = startPos + child.width
-        else -- layout is 'column'
-            child.translateY = child.translateY + startPos
-            startPos = startPos + child.height
-        end
-
         child:show()
     end
 end
@@ -66,22 +121,12 @@ end
 -- Override the _draw method
 function Layout:_draw()
     -- Draw the background
-    love.graphics.setColor(0, 1, 0, 1)
-    love.graphics.rectangle('fill', 0, 0, self.rect:getWidth(), self.rect:getHeight())
+    love.graphics.setColor(self.bgColor)
+    love.graphics.rectangle('fill', self:getX(), self:getY(), self:getWidth(), self:getHeight())
     -- Iterate over child components and draw them
-    -- local startPos = 0
-    -- for i, child in ipairs(self.children) do
-    --     love.graphics.push()
-    --     if self.layout == 'row' then
-    --         love.graphics.translate(startPos, 0)
-    --         startPos = startPos + child.dim.w
-    --     else -- layout is 'column'
-    --         love.graphics.translate(0, startPos)
-    --         startPos = startPos + child.dim.h
-    --     end
-    --     child:draw()
-    --     love.graphics.pop()
-    -- end
+    for _, child in ipairs(self.children) do
+        child:draw()
+    end
 end
 
 -- Override the update method
