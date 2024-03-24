@@ -3,22 +3,24 @@
 -- date: 17/02/2024
 -- author: Abhishek Mishra
 
-local class = require('lib/middleclass')
-local vector = require('lib/vector')
+local class = require('middleclass')
 
 -- Require the Panel class
-local Panel = require('Panel')
+local Panel = require('panel')
 
 -- Define the Layout class that extends the Panel class
 Layout = class('Layout', Panel)
 
 -- Constructor for the Layout class
-function Layout:initialize(pos, dim, layout, bgColor)
-    self.pos = pos or vector(0, 0)
-    Panel.initialize(self, dim)
-    self.layout = layout or 'row'            -- Default layout is 'row'
-    self.bgColor = bgColor or { 0, 0, 0, 1 } -- Default fill color is black
-    self.children = {}                       -- Initialize an empty table for child components
+function Layout:initialize(rect, config)
+    Panel.initialize(self, rect)
+    self.config = config or {}
+    -- Default layout is row
+    self.layout = self.config.layout or 'row'
+    -- Default fill color is black
+    self.bgColor = self.config.bgColor or { 0, 0, 0, 1 }
+    -- Initialize an empty table for child components
+    self.children = {}
 end
 
 -- Method to add a child component
@@ -64,22 +66,22 @@ end
 -- Override the _draw method
 function Layout:_draw()
     -- Draw the background
-    love.graphics.setColor(self.bgColor)
-    love.graphics.rectangle('fill', 0, 0, self.dim.w, self.dim.h)
+    love.graphics.setColor(0, 1, 0, 1)
+    love.graphics.rectangle('fill', 0, 0, self.rect:getWidth(), self.rect:getHeight())
     -- Iterate over child components and draw them
-    local startPos = 0
-    for i, child in ipairs(self.children) do
-        love.graphics.push()
-        if self.layout == 'row' then
-            love.graphics.translate(startPos, 0)
-            startPos = startPos + child.dim.w
-        else -- layout is 'column'
-            love.graphics.translate(0, startPos)
-            startPos = startPos + child.dim.h
-        end
-        child:draw()
-        love.graphics.pop()
-    end
+    -- local startPos = 0
+    -- for i, child in ipairs(self.children) do
+    --     love.graphics.push()
+    --     if self.layout == 'row' then
+    --         love.graphics.translate(startPos, 0)
+    --         startPos = startPos + child.dim.w
+    --     else -- layout is 'column'
+    --         love.graphics.translate(0, startPos)
+    --         startPos = startPos + child.dim.h
+    --     end
+    --     child:draw()
+    --     love.graphics.pop()
+    -- end
 end
 
 -- Override the update method

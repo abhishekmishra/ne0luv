@@ -4,20 +4,21 @@
 -- author: Abhishek Mishra
 
 -- Require the middleclass library
-local class = require('middleclass')
+local Class = require('middleclass')
 local vector = require('vector')
+local Rect = require('rect')
 
 -- Default values for the panel
 local PANEL_DEFAULT_WIDTH = 100
 local PANEL_DEFAULT_HEIGHT = 100
 
 -- Define the Panel class
-Panel = class('Panel')
+Panel = Class('Panel')
 
 --- Constructor for the Panel class
 --@param dim the dimensions of the panel
-function Panel:initialize(dim)
-    self.dim = dim or vector(PANEL_DEFAULT_WIDTH, PANEL_DEFAULT_HEIGHT)
+function Panel:initialize(rect)
+    self.rect = rect or Rect(0, 0, PANEL_DEFAULT_WIDTH, PANEL_DEFAULT_HEIGHT)
     self.translateX = 0
     self.translateY = 0
 end
@@ -59,7 +60,7 @@ end
 
 function Panel:mousepressed(x, y, button, istouch, presses)
     local wx, wy = self:screenToWorld(x, y)
-    if wx >= 0 and wx <= self.dim.w and wy >= 0 and wy <= self.dim.h then
+    if wx >= 0 and wx <= self.rect:getWidth() and wy >= 0 and wy <= self.rect:getHeight() then
         self:_mousepressed(wx, wy, button, istouch, presses)
     end
 end
@@ -69,7 +70,7 @@ end
 
 function Panel:mousereleased(x, y, button, istouch, presses)
     local wx, wy = self:screenToWorld(x, y)
-    if wx >= 0 and wx <= self.dim.w and wy >= 0 and wy <= self.dim.h then
+    if wx >= 0 and wx <= self.rect:getWidth() and wy >= 0 and wy <= self.rect:getHeight() then
         self:_mousereleased(wx, wy, button, istouch, presses)
     end
 end
@@ -79,7 +80,7 @@ end
 
 function Panel:mousemoved(x, y, dx, dy, istouch)
     local wx, wy = self:screenToWorld(x, y)
-    if wx >= 0 and wx <= self.dim.w and wy >= 0 and wy <= self.dim.h then
+    if wx >= 0 and wx <= self.rect:getWidth() and wy >= 0 and wy <= self.rect:getHeight() then
         self:_mousemoved(wx, wy, dx, dy, istouch)
     else
         self:_mouseout()
@@ -93,11 +94,11 @@ function Panel:_mouseout()
 end
 
 function Panel:getWidth()
-    return self.dim.w
+    return self.rect:getWidth()
 end
 
 function Panel:getHeight()
-    return self.dim.h
+    return self.rect:getHeight()
 end
 
 return Panel
