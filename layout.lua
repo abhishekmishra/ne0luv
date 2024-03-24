@@ -1,9 +1,10 @@
---- layout_panel.lua - A class for a panel that lays out child components 
+--- layout_panel.lua - A class for a panel that lays out child components
 --                     in a row or column
 -- date: 17/02/2024
 -- author: Abhishek Mishra
 
 local class = require('lib/middleclass')
+local vector = require('lib/vector')
 
 -- Require the Panel class
 local Panel = require('Panel')
@@ -12,11 +13,12 @@ local Panel = require('Panel')
 Layout = class('Layout', Panel)
 
 -- Constructor for the Layout class
-function Layout:initialize(x, y, width, height, layout, bgColor)
-    Panel.initialize(self, x, y, width, height)
-    self.layout = layout or 'row' -- Default layout is 'row'
-    self.bgColor = bgColor or {0, 0, 0, 1} -- Default fill color is black
-    self.children = {} -- Initialize an empty table for child components
+function Layout:initialize(pos, dim, layout, bgColor)
+    self.pos = pos or vector(0, 0)
+    Panel.initialize(self, dim)
+    self.layout = layout or 'row'            -- Default layout is 'row'
+    self.bgColor = bgColor or { 0, 0, 0, 1 } -- Default fill color is black
+    self.children = {}                       -- Initialize an empty table for child components
 end
 
 -- Method to add a child component
@@ -46,7 +48,7 @@ function Layout:show()
             child.translateY = child.translateY + startPos
             startPos = startPos + child.height
         end
-    
+
         child:show()
     end
 end
@@ -63,17 +65,17 @@ end
 function Layout:_draw()
     -- Draw the background
     love.graphics.setColor(self.bgColor)
-    love.graphics.rectangle('fill', 0, 0, self.width, self.height)
+    love.graphics.rectangle('fill', 0, 0, self.dim.w, self.dim.h)
     -- Iterate over child components and draw them
     local startPos = 0
     for i, child in ipairs(self.children) do
         love.graphics.push()
         if self.layout == 'row' then
             love.graphics.translate(startPos, 0)
-            startPos = startPos + child.width
+            startPos = startPos + child.dim.w
         else -- layout is 'column'
             love.graphics.translate(0, startPos)
-            startPos = startPos + child.height
+            startPos = startPos + child.dim.h
         end
         child:draw()
         love.graphics.pop()

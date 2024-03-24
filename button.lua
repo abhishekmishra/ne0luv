@@ -14,8 +14,8 @@ Button.static.idCounter = 0
 --- constructor
 --@param displayText the text to display on the button
 --@param onActivate the function to call when the button is activated
-function Button:initialize(width, height, displayText, onActivate, colors)
-    Panel.initialize(self, width, height)
+function Button:initialize(dim, displayText, onActivate, colors)
+    Panel.initialize(self, dim)
     Button.idCounter = Button.idCounter + 1
     self.id = 'Button' .. Button.idCounter
     self.displayText = displayText
