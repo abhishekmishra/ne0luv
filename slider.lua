@@ -13,8 +13,8 @@ local Panel = require('Panel')
 Slider = class('Slider', Panel)
 
 -- Constructor for the Slider class
-function Slider:initialize(x, y, width, height, minValue, maxValue, currentValue)
-    Panel.initialize(self, x, y, width, height)
+function Slider:initialize(width, height, minValue, maxValue, currentValue)
+    Panel.initialize(self, width, height)
     self.minValue = minValue or 0                     -- Default minValue is 0
     self.maxValue = maxValue or 100                   -- Default maxValue is 100
     self.currentValue = currentValue or self.minValue -- Default currentValue is minValue
@@ -28,13 +28,13 @@ end
 function Slider:calculateHandlePosition()
     local range = self.maxValue - self.minValue
     local fraction = (self.currentValue - self.minValue) / range
-    return self.x + fraction * (self.width - self.handleWidth)
+    return fraction * (self.width - self.handleWidth)
 end
 
 -- Method to update the current value based on the handle position
 function Slider:updateCurrentValue()
     local range = self.maxValue - self.minValue
-    local fraction = (self.handleX - self.x) / (self.width - self.handleWidth)
+    local fraction = (self.handleX) / (self.width - self.handleWidth)
     self.currentValue = self.minValue + fraction * range
     self.currentValue = math.floor(self.currentValue + 0.5)
     self:fireChangeHandlers()
@@ -65,7 +65,7 @@ function Slider:_draw()
     love.graphics.push()
 
     -- Draw the line
-    love.graphics.line(self.x, self.y + self.height / 2, self.x + self.width, self.y + self.height / 2)
+    love.graphics.line(0, self.height / 2, self.width, self.height / 2)
 
     if self.dragging then
         love.graphics.setColor(0.5, 0.5, 0.5, 1)
@@ -74,7 +74,7 @@ function Slider:_draw()
     end
 
     -- Draw the handle
-    love.graphics.rectangle('fill', self.handleX, self.y, self.handleWidth, self.handleHeight)
+    love.graphics.rectangle('fill', self.handleX, 0, self.handleWidth, self.handleHeight)
 
     love.graphics.pop()
 end
@@ -84,7 +84,7 @@ function Slider:_mousepressed(x, y, button)
     -- print("Slider:mousepressed [" .. x .. ", " .. y .. "]")
     if button == 1 and x >= self.handleX
         and x <= self.handleX + self.handleWidth
-        and y >= self.y and y <= self.y + self.handleHeight then
+        and y >= 0 and y <= self.handleHeight then
         self.dragging = true
     else
         self.handleX = x
@@ -98,9 +98,8 @@ function Slider:_mousemoved(x, y, dx, dy)
     -- print("Slider:mousemoved")
     if self.dragging then
         self.handleX = self.handleX + dx
-        self.handleX = math.max(self.x,
-            math.min(self.x + self.width -
-                self.handleWidth, self.handleX))
+        self.handleX = math.max(0,
+            math.min(self.width - self.handleWidth, self.handleX))
         self:updateCurrentValue()
     end
 end

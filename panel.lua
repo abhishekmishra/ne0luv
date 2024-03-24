@@ -6,15 +6,17 @@
 -- Require the middleclass library
 local class = require('middleclass')
 
+-- Default values for the panel
+local PANEL_DEFAULT_WIDTH = 100
+local PANEL_DEFAULT_HEIGHT = 100
+
 -- Define the Panel class
 Panel = class('Panel')
 
 -- Constructor for the Panel class
-function Panel:initialize(x, y, width, height)
-    self.x = x or 0
-    self.y = y or 0
-    self.width = width or 100
-    self.height = height or 100
+function Panel:initialize(width, height)
+    self.width = width or PANEL_DEFAULT_WIDTH
+    self.height = height or PANEL_DEFAULT_HEIGHT
     self.translateX = 0
     self.translateY = 0
 end
@@ -87,14 +89,6 @@ function Panel:_mousemoved(x, y, dx, dy, istouch)
 end
 
 function Panel:_mouseout()
-end
-
-function Panel:getX()
-    return self.x
-end
-
-function Panel:getY()
-    return self.y
 end
 
 function Panel:getWidth()

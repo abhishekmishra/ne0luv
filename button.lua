@@ -14,8 +14,8 @@ Button.static.idCounter = 0
 --- constructor
 --@param displayText the text to display on the button
 --@param onActivate the function to call when the button is activated
-function Button:initialize(x, y, width, height, displayText, onActivate, colors)
-    Panel.initialize(self, x, y, width, height)
+function Button:initialize(width, height, displayText, onActivate, colors)
+    Panel.initialize(self, width, height)
     Button.idCounter = Button.idCounter + 1
     self.id = 'Button' .. Button.idCounter
     self.displayText = displayText
@@ -87,8 +87,8 @@ end
 
 -- contains - check if the button contains the point x, y
 function Button:contains(x, y)
-    return x >= self.x and x <= self.x + self.width and
-        y >= self.y and y <= self.y + self.height
+    return x >= 0 and x <= self.width and
+        y >= 0 and y <= self.height
 end
 
 return Button
