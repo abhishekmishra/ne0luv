@@ -1,2 +1,2 @@
 # ne0luv
-Love2d UI and state management utils
+Love2d UI, state management, math and miscellaneous utils
