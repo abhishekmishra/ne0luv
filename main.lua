@@ -1,6 +1,7 @@
 ---@diagnostic disable: duplicate-set-field
 local Layout = require('layout')
 local Rect = require('rect')
+local Text = require('text')
 
 local top
 
@@ -16,18 +17,26 @@ function love.load()
     )
     for i = 1, 3 do
         local lp = Layout(
-            Rect(0, 0, top:getWidth(), top:getHeight()/3.0),
+            Rect(0, 0, top:getWidth(), top:getHeight() / 3.0),
             {
                 bgColor = { 0, 0, 0.2 * i, 1 }
             }
         )
         for j = 1, 3 do
             local sp = Layout(
-                Rect(0, 0, lp:getWidth()/3, lp:getHeight()),
+                Rect(0, 0, lp:getWidth() / 3, lp:getHeight()),
                 {
                     bgColor = { 0.2 * i, 0.2 * j, 0, 1 }
                 }
             )
+            local txt = Text(
+                Rect(0, 0, sp:getWidth(), sp:getHeight()),
+                {
+                    fgColor = { 1, 1, 1, 1 },
+                    text = 'Text ' .. i .. ' ' .. j,
+                    font = love.graphics.newFont(24)
+                })
+            sp:addChild(txt)
             lp:addChild(sp)
         end
         top:addChild(lp)
