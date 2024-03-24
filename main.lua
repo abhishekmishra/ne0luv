@@ -1,3 +1,4 @@
+---@diagnostic disable: duplicate-set-field
 local Layout = require('layout')
 local Rect = require('rect')
 
