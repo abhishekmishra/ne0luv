@@ -37,7 +37,7 @@ function Slider:updateCurrentValue()
     local range = self.maxValue - self.minValue
     local fraction = (self.handleX - self:getX()) / (self:getWidth() - self.handleWidth)
     self.currentValue = self.minValue + fraction * range
-    self.currentValue = math.floor(self.currentValue + 0.5)
+    -- self.currentValue = math.floor(self.currentValue + 0.5)
     self:fireChangeHandlers()
 end
 
