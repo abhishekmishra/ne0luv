@@ -116,7 +116,7 @@ function Vector:normalize()
     end
 end
 
---- limit the magnitude of the vector, returns a new vector without modifying 
+--- limit the magnitude of the vector, returns a new vector without modifying
 -- the original
 --@param max the maximum magnitude
 --@return the limited vector (a new vector)
@@ -195,6 +195,11 @@ function Vector.random3D()
     local vx = math.sqrt(1 - vz * vz) * math.cos(angle)
     local vy = math.sqrt(1 - vz * vz) * math.sin(angle)
     return Vector(vx, vy, vz)
+end
+
+--- get the heading of the vector
+function Vector:heading()
+    return math.atan(self.y, self.x)
 end
 
 return Vector

@@ -64,7 +64,7 @@ for _, moduleName in ipairs(moduleSequence) do
 
     local content = file:read('*a')
     -- replace "return moduleName" with "modules[moduleName] = moduleName"
-    content = content:gsub('return ' .. moduleName, 'modules["' .. moduleName .. '"] = ' .. moduleName)
+    content = content:gsub('return ' .. moduleName .. '%s+', 'modules["' .. moduleName .. '"] = ' .. moduleName .. '\n')
     -- replace any line which requires a module in the moduleSequence with an empty line.
     for _, m in ipairs(moduleSequence) do
         content = content:gsub('local ' .. m .. ' = require%(\'' .. m:lower() .. '\'%)', '')
