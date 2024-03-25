@@ -7,7 +7,7 @@
 local class = require('middleclass')
 
 -- Require the Panel class
-local Panel = require('Panel')
+local Panel = require('panel')
 
 -- Define the Slider class that extends the Panel class
 local Slider = class('Slider', Panel)

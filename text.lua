@@ -7,7 +7,7 @@
 local Class = require('middleclass')
 
 -- Require the Panel class
-local Panel = require('Panel')
+local Panel = require('panel')
 
 -- Define the Text class that extends the Panel class
 local Text = Class('Text', Panel)

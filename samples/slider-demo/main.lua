@@ -3,14 +3,21 @@
 -- date: 24/03/2024
 -- author: Abhishek Mishra
 
-package.path = package.path .. ';' .. '../../?.lua'
+package.path = package.path .. ';' .. '../../dist/?.lua' .. ';' .. '../../?.lua'
 
-local Slider = require('slider')
+local nl = require('ne0luv')
+local Slider = nl.Slider
 
 local slider0
 
 function love.load()
-    slider0 = Slider(10, 10, 200, 30, 0, 100, 50)
+    local rect = nl.Rect(10, 10, 200, 30)
+    slider0 = Slider(rect, {
+        minValue = 0,
+        maxValue = 100,
+        currentValue = 50,
+        bgColor = { 0.2, 0.2, 0, 1 }
+    })
 end
 
 function love.draw()
