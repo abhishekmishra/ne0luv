@@ -16,31 +16,36 @@ function love.load()
         Rect(0, 0, love.graphics.getWidth(), love.graphics.getHeight()),
         topConfig
     )
-    for i = 1, 3 do
+    local numOuterPanels = 3
+    for i = 1, numOuterPanels do
         local outerPanel = Layout(
-            Rect(0, 0, top:getWidth(), top:getHeight() / 3.0),
+            Rect(0, 0, top:getWidth(), top:getHeight() / numOuterPanels),
             {
                 bgColor = { 0, 0, 0.2 * i, 1 }
             }
         )
-        for j = 1, 3 do
+        local numInnerPanels = 3
+        for j = 1, numInnerPanels do
             local innerPanel = Layout(
-                Rect(0, 0, outerPanel:getWidth() / 3, outerPanel:getHeight()),
+                Rect(0, 0,
+                    outerPanel:getWidth() / numInnerPanels, outerPanel:getHeight()),
                 {
                     layout = 'column',
                     bgColor = { 0.2 * i, 0.2 * j, 0, 1 }
                 }
             )
             local txt = Text(
-                Rect(0, 0, innerPanel:getWidth(), innerPanel:getHeight() / 3),
+                Rect(0, 0,
+                    innerPanel:getWidth(), innerPanel:getHeight() / numInnerPanels),
                 {
                     fgColor = { 1, 1, 1, 1 },
-                    text = 'Text ' .. i .. ' ' .. j,
+                    text = 'Slider #' .. i .. ', ' .. j,
                     font = love.graphics.newFont(24)
                 }
             )
             local slider = Slider(
-                Rect(0, 0, innerPanel:getWidth(), innerPanel:getHeight() / 3),
+                Rect(0, 0,
+                    innerPanel:getWidth(), innerPanel:getHeight() / numInnerPanels),
                 {
                     minValue = 0,
                     maxValue = 100,
@@ -49,16 +54,17 @@ function love.load()
                 }
             )
             local sliderValue = Text(
-                Rect(0, 0, innerPanel:getWidth(), innerPanel:getHeight() / 3),
+                Rect(0, 0,
+                    innerPanel:getWidth(), innerPanel:getHeight() / numInnerPanels),
                 {
                     fgColor = { 1, 1, 1, 1 },
-                    text = 'Value: ' .. slider.currentValue,
+                    text = '' .. slider.currentValue,
                     font = love.graphics.newFont(24)
                 }
             )
 
             slider:addChangeHandler(function(value)
-                sliderValue:setText('Value: ' .. value)
+                sliderValue:setText('' .. value)
             end)
 
             innerPanel:addChild(txt)
