@@ -19,6 +19,7 @@ function Text:initialize(rect, config)
     self.fgColor = self.config.fgColor or { 1, 1, 1, 1 } -- Default text color is white
     self.font = self.config.font or love.graphics.newFont(14) -- Default font size is 14
     self.displayText = self.config.text or "" -- Default text is an empty string
+    self.align = self.config.align or "left" -- Default alignment is left
     self._text = love.graphics.newText(self.font, self.displayText) -- Create the love2d text object
 end
 
@@ -28,11 +29,16 @@ function Text:setText(text)
     self._text:set(text) -- Update the love2d text object
 end
 
+-- Set the text alignment
+function Text:setAlignment(align)
+    self.align = align
+end
+
 -- Override the draw method
 function Text:_draw()
     love.graphics.setColor(self.fgColor)
     love.graphics.setFont(self.font)
-    love.graphics.draw(self._text, self:getX(), self:getY())
+    love.graphics.printf(self.displayText, self:getX(), self:getY(), self:getWidth(), self.align)
 end
 
 return Text
