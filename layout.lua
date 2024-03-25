@@ -9,7 +9,7 @@ local class = require('middleclass')
 local Panel = require('panel')
 
 -- Define the Layout class that extends the Panel class
-Layout = class('Layout', Panel)
+local Layout = class('Layout', Panel)
 
 -- Constructor for the Layout class
 function Layout:initialize(rect, config)

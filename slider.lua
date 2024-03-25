@@ -10,7 +10,7 @@ local class = require('middleclass')
 local Panel = require('Panel')
 
 -- Define the Slider class that extends the Panel class
-Slider = class('Slider', Panel)
+local Slider = class('Slider', Panel)
 
 -- Constructor for the Slider class
 function Slider:initialize(rect, config)

@@ -10,7 +10,7 @@ local Class = require('middleclass')
 local Panel = require('Panel')
 
 -- Define the Text class that extends the Panel class
-Text = Class('Text', Panel)
+local Text = Class('Text', Panel)
 
 -- Constructor for the Text class
 function Text:initialize(rect, config)

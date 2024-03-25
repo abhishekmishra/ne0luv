@@ -13,7 +13,7 @@ local PANEL_DEFAULT_WIDTH = 100
 local PANEL_DEFAULT_HEIGHT = 100
 
 -- Define the Panel class
-Panel = Class('Panel')
+local Panel = Class('Panel')
 
 --- Constructor for the Panel class
 --@param dim the dimensions of the panel
