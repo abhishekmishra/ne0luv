@@ -66,8 +66,8 @@ for _, moduleName in ipairs(moduleSequence) do
     -- replace "return moduleName" with "modules[moduleName] = moduleName"
     content = content:gsub('return ' .. moduleName, 'modules["' .. moduleName .. '"] = ' .. moduleName)
     -- replace any line which requires a module in the moduleSequence with an empty line.
-    for _, module in ipairs(moduleSequence) do
-        content = content:gsub('require%(\'' .. module .. '\'%)', '')
+    for _, m in ipairs(moduleSequence) do
+        content = content:gsub('local ' .. m .. ' = require%(\'' .. m:lower() .. '\'%)', '')
     end
     output:write(content)
 
