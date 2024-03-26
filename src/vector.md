@@ -211,6 +211,20 @@ end
 
 ## Magnitude and Heading
 
+In this section we define a few methods that concern the *magnitude* of the
+vector, and its *heading*. The *magnitude* of a vector is defined as the square
+root of the sum of the squares of its components.
+
+* The `mag` method computes and returns the *magnitude* of the vector.
+* `setMag` allows one to change the magnitude of a vector while keeping the same
+  heading.
+* The `magSq` method returns the square of the *magnitude* and is sometimes
+  useful.
+* The `heading` method returns the angle in which the vector is pointing.
+* The `limit` method returns a new vector which has the same heading as the
+  current vector but its magnitude is at most the argument provided to the
+  method.
+
 ```lua { code_file="vector.lua" }
 
 --- get the magnitude of the vector
@@ -252,6 +266,9 @@ end
 
 ## Products (Dot & Cross)
 
+The methods `dot` and `cross` provide the two vector products. They return a new
+vector as the result.
+
 ```lua { code_file="vector.lua" }
 
 --- dot product of this vector with another vector
@@ -273,6 +290,15 @@ end
 
 ## Miscellaneous Vector Functions
 
+Two miscellaneous functions are defined here, which do not fit the other
+categories.
+
+1. `dist`: This calculates and returns the distance between this vector and the
+   provided vector.
+2. `normalize`: This function helps to modify the vector in such a way that its
+   heading remains the same, but its magnitude becomes `1`. This method modifies
+   the vector.
+
 ```lua { code_file="vector.lua" }
 
 --- distance between this vector and another vector
@@ -291,6 +317,19 @@ end
 ```
 
 ## Comparison Operations
+
+This section is similar to the arithmetic operators. The metamethods providing
+the ability to override the comparison operators are implemented here. The
+implementations are simple and self-explanatory. The operators implemented are:
+
+1. Equals
+2. Not-equals
+3. Unary minus
+4. Unary plus
+5. Less than
+6. Less than or equals
+7. Greater than
+8. Greater than or equals
 
 ```lua { code_file="vector.lua" }
 
@@ -343,6 +382,10 @@ end
 
 ## Create a Random Vector
 
+Sometimes we need to create one or more vectors with a random heading. The
+`random2D` and `random3D` methods create new 2D and 3D vectors with a random
+heading. These tow vectors are **static** and return new vector instances.
+
 ```lua { code_file="vector.lua" }
 
 --- create a random 2D vector
@@ -364,6 +407,8 @@ end
 ```
 
 ## Module Return
+
+This line exports the class so that the calling program can use the value.
 
 ```lua { code_file="vector.lua" }
 
