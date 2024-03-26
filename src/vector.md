@@ -1,3 +1,41 @@
+---
+title: Simple 2D/3D Vector Implemenation for Lua
+date: 23/03/2024
+author: Abhishek Mishra
+license: MIT, see LICENSE file for details.
+---
+
+# Introduction
+
+This is a literate program that describes a 2D/3D Vector implemenation in the
+Lua Programming language. I write a lot of graphics programs in Lua, especially
+in Love2D. Vectors are quite essential to most graphics programs.
+
+The design of this program borrows heavily from the [Sample Vector implemtation
+in Love2d Docs][1], as well as the [Vector API in p5.js][2]. As a reault, the
+implementation is straighforward and provides the most common operations on
+Vector. The implementation prioritises simplicity.
+
+The Vector implementation provides just one public export, the `Vector` class.
+The class is written using the [middleclass][3] library.
+
+[1]: https://love2d.org/wiki/Vectors
+[2]: https://p5js.org/reference/#/p5.Vector
+[3]: https://github.com/kikito/middleclass
+
+The next section describes the implementation, then we provide a few sample
+usages of the `Vector` API. The final sections list any future plans,
+current limitations, known issues etc.
+
+# Program
+
+The program implements just one class named `Vector` in the file `vector.lua`.
+The implemenation tries to provide a public API similar to the [p5js Vector
+implementation][2]. Since Lua has operator overloading via certain special
+methods, we use this mechanism to provide arithmetic operations for vectors.
+
+## Header
+
 ```lua { code_file="vector.lua" }
 --- vector.lua - A simple vector class. Similar to the Vector implementation in
 -- the p5.js library.
@@ -8,7 +46,11 @@
 -- date: 23/03/2024
 -- author: Abhishek Mishra
 -- license: MIT, see LICENSE for more details.
+```
 
+## Class Definition
+
+```lua { code_file="vector.lua" }
 local class = require('middleclass')
 
 --- Vector class
@@ -30,20 +72,22 @@ function Vector:set(x, y, z)
     self.x = x
     self.y = y
     self.z = z
-
-    -- width and height aliases
-    self.w = x
-    self.h = y
-
-    -- u and v aliases
-    self.u = x
-    self.v = y
 end
+```
+
+## Clone/Copy the Vector
+
+```lua { code_file="vector.lua" }
 
 --- copy the vector
 function Vector:copy()
     return Vector(self.x, self.y, self.z)
 end
+```
+
+## Arithmetic Operations
+
+```lua { code_file="vector.lua" }
 
 --- add a vector to this vector using the lua operator overloading
 --@param v the vector to add
@@ -68,6 +112,11 @@ end
 function Vector:__div(s)
     return Vector(self.x / s, self.y / s, self.z / s)
 end
+```
+
+## Magnitude and Heading
+
+```lua { code_file="vector.lua" }
 
 --- get the magnitude of the vector
 function Vector:mag()
@@ -87,6 +136,29 @@ function Vector:magSq()
     return self.x * self.x + self.y * self.y + self.z * self.z
 end
 
+--- get the heading of the vector
+function Vector:heading()
+    return math.atan(self.y, self.x)
+end
+
+--- limit the magnitude of the vector, returns a new vector without modifying
+-- the original
+--@param max the maximum magnitude
+--@return the limited vector (a new vector)
+function Vector:limit(max)
+    local limited = self:copy()
+    if limited:magSq() > max * max then
+        limited:normalize()
+        limited = limited * max
+    end
+    return limited
+end
+```
+
+## Products (Dot & Cross)
+
+```lua { code_file="vector.lua" }
+
 --- dot product of this vector with another vector
 --@param v the other vector
 function Vector:dot(v)
@@ -102,6 +174,11 @@ function Vector:cross(v)
         self.x * v.y - self.y * v.x
     )
 end
+```
+
+## Miscellaneous Vector Functions
+
+```lua { code_file="vector.lua" }
 
 --- distance between this vector and another vector
 --@param v the other vector
@@ -116,19 +193,11 @@ function Vector:normalize()
         self:set(self.x / m, self.y / m, self.z / m)
     end
 end
+```
 
---- limit the magnitude of the vector, returns a new vector without modifying
--- the original
---@param max the maximum magnitude
---@return the limited vector (a new vector)
-function Vector:limit(max)
-    local limited = self:copy()
-    if limited:magSq() > max * max then
-        limited:normalize()
-        limited = limited * max
-    end
-    return limited
-end
+## Comparison Operations
+
+```lua { code_file="vector.lua" }
 
 --- equals operator overloading
 --@param v the other vector
@@ -180,6 +249,11 @@ end
 function Vector:__ge(v)
     return self:magSq() >= v:magSq()
 end
+```
+
+## Create a Random Vector
+
+```lua { code_file="vector.lua" }
 
 --- create a random 2D vector
 --@return a random 2D vector
@@ -197,11 +271,23 @@ function Vector.random3D()
     local vy = math.sqrt(1 - vz * vz) * math.sin(angle)
     return Vector(vx, vy, vz)
 end
+```
 
---- get the heading of the vector
-function Vector:heading()
-    return math.atan(self.y, self.x)
-end
+## Module Return
+
+```lua { code_file="vector.lua" }
 
 return Vector
 ```
+
+# Future Plans
+
+* Provide a constructor that accepts values in a table.
+
+```lua
+local v = Vector { 1, 2, 0 }
+```
+
+
+# Limitations & Known Issues
+
