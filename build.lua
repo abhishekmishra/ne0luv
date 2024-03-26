@@ -8,7 +8,6 @@
 
 -- Define the modules to merge
 local moduleSequence = {
-    'Screen',
     'Vector',
     'Rect',
     'Panel',
@@ -18,7 +17,6 @@ local moduleSequence = {
     'Layout'
 }
 local moduleFiles = {
-    Screen = 'screen.lua',
     Panel = 'panel.lua',
     Vector = 'vector.lua',
     Text = 'text.lua',
