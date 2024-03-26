@@ -1,4 +1,7 @@
---- mergemodules.lua - A script to merge multiple lua files into a single file
+--- build.lua - This program generates individual modules from the litpd files
+-- for each module and then merges them into a single file. Each module in the
+-- merged file is loaded into a table and returned by the merged file as part
+-- of one module.
 --
 -- date: 25/03/2024
 -- author: Abhishek Mishra
