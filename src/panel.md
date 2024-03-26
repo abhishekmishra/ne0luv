@@ -1,3 +1,4 @@
+```lua { code_file="panel.lua" }
 --- panel.lua - A panel class
 --
 -- date: 17/02/2024
@@ -116,3 +117,4 @@ function Panel:setY(y)
 end
 
 return Panel
+```

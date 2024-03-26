@@ -1,3 +1,5 @@
+```lua { code_file="rect.lua" }
+
 local Class = require('middleclass')
 local Vector = require('vector')
 
@@ -46,3 +48,4 @@ function Rect:setHeight(h)
 end
 
 return Rect
+```

@@ -1,3 +1,4 @@
+```lua { code_file="button.lua" }
 --- button.lua - A simple button class
 --
 -- date: 17/02/2024
@@ -92,3 +93,4 @@ function Button:contains(x, y)
 end
 
 return Button
+```

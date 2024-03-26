@@ -1,3 +1,4 @@
+```lua { code_file="vector.lua" }
 --- vector.lua - A simple vector class. Similar to the Vector implementation in
 -- the p5.js library.
 --
@@ -203,3 +204,4 @@ function Vector:heading()
 end
 
 return Vector
+```

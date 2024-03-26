@@ -1,3 +1,4 @@
+```lua { code_file="layout.lua" }
 --- layout_panel.lua - A class for a panel that lays out child components
 --                     in a row or column
 -- date: 17/02/2024
@@ -172,3 +173,4 @@ function Layout:_mousemoved(x, y, dx, dy, istouch)
 end
 
 return Layout
+```

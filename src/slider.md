@@ -1,3 +1,4 @@
+```lua { code_file="slider.lua" }
 --- slider.lua - A slider control based on the panel class
 --
 -- date: 17/04/2024
@@ -126,3 +127,4 @@ end
 
 
 return Slider
+```

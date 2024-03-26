@@ -1,3 +1,4 @@
+```lua { code_file="text.lua" }
 --- text.lua - A panel class that displays a single line of text
 --
 -- date: 17/02/2024
@@ -42,3 +43,4 @@ function Text:_draw()
 end
 
 return Text
+```
