@@ -11,16 +11,16 @@ function Rect:initialize(x, y, w, h)
 end
 
 function Rect:contains(x, y)
-    return (x >= self.pos.x and x <= self.pos.x + self.dim.w
-        and y >= self.pos.y and y <= self.pos.y + self.dim.h)
+    return (x >= self.pos.x and x <= self.pos.x + self.dim.x
+        and y >= self.pos.y and y <= self.pos.y + self.dim.y)
 end
 
 function Rect:getWidth()
-    return self.dim.w
+    return self.dim.x
 end
 
 function Rect:getHeight()
-    return self.dim.h
+    return self.dim.y
 end
 
 function Rect:getX()
@@ -40,11 +40,11 @@ function Rect:setY(y)
 end
 
 function Rect:setWidth(w)
-    self.dim.w = w
+    self.dim.x = w
 end
 
 function Rect:setHeight(h)
-    self.dim.h = h
+    self.dim.y = h
 end
 
 return Rect
