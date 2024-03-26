@@ -7,9 +7,17 @@ license: MIT, see LICENSE file for details.
 
 # Introduction
 
+Lua has a minimal standard library and does not have a Vector type.
+
 This is a literate program that describes a 2D/3D Vector implemenation in the
-Lua Programming language. I write a lot of graphics programs in Lua, especially
-in Love2D. Vectors are quite essential to most graphics programs.
+Lua Programming language. Note that we are not talking about an arraylist/vector
+datastructure which can have a large number of elements. These are vectors with
+three components x, y and z. Such vectors are a staple of graphics programming.
+See for example Vec2/Vec3/Vec4 in GLSL. I write a lot of graphics programs in
+Lua, especially in Love2D and need vectors in most of them.
+
+The three component vector with z = 0 can be used as a two-dimensional vector
+and meets most of my programming needs.
 
 The design of this program borrows heavily from the [Sample Vector implemtation
 in Love2d Docs][1], as well as the [Vector API in p5.js][2]. As a reault, the
@@ -17,15 +25,15 @@ implementation is straighforward and provides the most common operations on
 Vector. The implementation prioritises simplicity.
 
 The Vector implementation provides just one public export, the `Vector` class.
-The class is written using the [middleclass][3] library.
+This class is written using the [middleclass][3] library.
 
 [1]: https://love2d.org/wiki/Vectors
 [2]: https://p5js.org/reference/#/p5.Vector
 [3]: https://github.com/kikito/middleclass
 
 The next section describes the implementation, then we provide a few sample
-usages of the `Vector` API. The final sections list any future plans,
-current limitations, known issues etc.
+usages of the `Vector` API. The final sections list any future plans, current
+limitations, known issues etc.
 
 # Program
 
@@ -35,6 +43,10 @@ implementation][2]. Since Lua has operator overloading via certain special
 methods, we use this mechanism to provide arithmetic operations for vectors.
 
 ## Header
+
+The header is self-explanatory and provides some minimal info about the file in
+standard documentation format. All the class and method documentation in the
+program also uses the same format.
 
 ```lua { code_file="vector.lua" }
 --- vector.lua - A simple vector class. Similar to the Vector implementation in
@@ -49,6 +61,23 @@ methods, we use this mechanism to provide arithmetic operations for vectors.
 ```
 
 ## Class Definition
+
+The `Vector` class is implemented using the excellent [`kikito/middleclass`
+library][3]. The constructor accepts three values `x`, `y`, and `z`, the three
+components of the new vector. If any of these values are not provided the
+default is `0`.
+
+Using this mechanism one can use the class as a 2D vector by initializing only
+the `x` and `y` components and forgetting that the `z` component even exists.
+
+Theoretically, one can also use the class for a scalar by making `y` and `z` 0.
+However this would not be very useful.
+
+The `set` method can be used to set 1, 2 or all 3 of the values of the values
+together.
+
+The `x`, `y` and `z` values can also be changed individually by directly setting
+the values by assignment.
 
 ```lua { code_file="vector.lua" }
 local class = require('middleclass')
@@ -75,7 +104,55 @@ function Vector:set(x, y, z)
 end
 ```
 
+**Example**
+
+```lua
+-- a 2d vector
+v2d = Vector(1, 2)
+
+-- set both x and y
+v2d:set(5, 6)
+
+-- a 3d vector
+v3d = Vector(2, 3, 4)
+
+-- set x, y, and z together
+v3d:set(5, 6, 7)
+
+-- set a single component
+v3d.x = 8
+```
+
+
+## Print the Vector
+
+We override the `__tostring` metamethod to provide a readable respresentation
+for the Vector when printing to a console or for other debugging use-cases.
+
+```lua { code_file="vector.lua" }
+
+--- tostring operator overloading
+function Vector:__tostring()
+    return 'Vector(' .. self.x .. ', ' .. self.y .. ', ' .. self.z .. ')'
+end
+```
+
+**Example**
+
+We can create a vector and print it to the console.
+
+```lua
+v = Vector(1, 2)
+
+print(v)
+-- Vector(1, 2)
+```
+
 ## Clone/Copy the Vector
+
+Cloning/copying a vector is a common alternate way of constructing a new vector
+instance useful in many contexts. The `copy` method simply returns a new
+instance with the same components.
 
 ```lua { code_file="vector.lua" }
 
@@ -85,7 +162,22 @@ function Vector:copy()
 end
 ```
 
+**Example**
+
+In the following example we create a vector `v`, and a copy `w`. Then we change
+the value of `w.x` and `v` remains unchanged.
+
+```lua
+v = Vector(1, 2)
+w = v:copy()
+w.x = 4
+print(v .. ', ' .. w)
+-- Vector(1, 2, 0), Vector(4, 2, 0)
+```
+
 ## Arithmetic Operations
+
+
 
 ```lua { code_file="vector.lua" }
 
@@ -203,11 +295,6 @@ end
 --@param v the other vector
 function Vector:__eq(v)
     return self.x == v.x and self.y == v.y and self.z == v.z
-end
-
---- tostring operator overloading
-function Vector:__tostring()
-    return 'Vector(' .. self.x .. ', ' .. self.y .. ', ' .. self.z .. ')'
 end
 
 --- vector not equals operator overloading
