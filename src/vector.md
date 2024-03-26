@@ -177,7 +177,10 @@ print(v .. ', ' .. w)
 
 ## Arithmetic Operations
 
-
+Lua provides an excellent mechanism for operator overloading via metamethods. We
+use this to enable common-sense arithmetic for our Vector class.
+Addition/Subtraction of another vector, multiplication and division by a scalar
+value are supported via the Lua `+, -, *, and /` operators.
 
 ```lua { code_file="vector.lua" }
 
