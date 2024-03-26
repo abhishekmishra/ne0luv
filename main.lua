@@ -1,8 +1,9 @@
 ---@diagnostic disable: duplicate-set-field
-local Layout = require('layout')
-local Rect = require('rect')
-local Text = require('text')
-local Slider = require('slider')
+local nl = require('dist/ne0luv')
+local Layout = nl.Layout
+local Rect = nl.Rect
+local Text = nl.Text
+local Slider = nl.Slider
 
 local top
 
