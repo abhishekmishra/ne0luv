@@ -56,7 +56,7 @@ function Module:generate()
     handle:close()
 
     -- run the litpd program to generate the code and html files
-    cmd = 'lua ./litpd.lua ' .. self.litpdFile .. ' --to=html --standalone --toc --output=' .. self.htmlFile
+    cmd = 'lua ./litpd/litpd.lua ' .. self.litpdFile .. ' --to=html --standalone --toc --output=' .. self.htmlFile
     print('Executing: ' .. cmd)
     local handle = io.popen(cmd)
     if handle == nil then
