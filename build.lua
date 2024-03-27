@@ -73,15 +73,6 @@ function Module:toString()
     return 'Module: ' .. self.name .. ' (' .. self.codeFile .. ')'
 end
 
--- create the modules
--- Module {'Vector', 'vector.md', 'vector.lua', 'vector.html'}
--- Module {'Rect', 'rect.md', 'rect.lua', 'rect.html'}
--- Module {'Panel', 'panel.md', 'panel.lua', 'panel.html'}
--- Module {'Text', 'text.md', 'text.lua', 'text.html'}
--- Module {'Button', 'button.md', 'button.lua', 'button.html'}
--- Module {'Slider', 'slider.md', 'slider.lua', 'slider.html'}
--- Module {'Layout', 'layout.md', 'layout.lua', 'layout.html'}
-
 --- A document class which represents the main literate program in the ne0luv
 -- library.
 
@@ -156,107 +147,15 @@ Document {
     name = 'ne0luv',
     litpd = 'ne0luv.md',
     modules = {
-        { name = 'Vector', codeFile = 'vector.lua' },
-        -- { name = 'Rect', codeFile = 'rect.lua' },
-        -- { name = 'Panel', codeFile = 'panel.lua' },
-        -- { name = 'Text', codeFile = 'text.lua' },
-        -- { name = 'Button', codeFile = 'button.lua' },
-        -- { name = 'Slider', codeFile = 'slider.lua' },
-        -- { name = 'Layout', codeFile = 'layout.lua' }
+        { name = 'ne0luv', codeFile = 'ne0luv.lua' },
     }
 }
 
+-- generate the documents
 for _, doc in pairs(DOCUMENTS) do
     print(doc)
     doc:clean()
     doc:generate()
 end
--- Module {'Vector', 'vector.md', 'vector.lua', 'vector.html'}
--- Module {'Rect', 'rect.md', 'rect.lua', 'rect.html'}
--- Module {'Panel', 'panel.md', 'panel.lua', 'panel.html'}
--- Module {'Text', 'text.md', 'text.lua', 'text.html'}
--- Module {'Button', 'button.md', 'button.lua', 'button.html'}
--- Module {'Slider', 'slider.md', 'slider.lua', 'slider.html'}
--- Module {'Layout', 'layout.md', 'layout.lua', 'layout.html'}
 
--- -- generate the modules
--- for _, module in pairs(MODULES) do
---     module:generate()
--- end
-
--- -- Open the output file
--- local output = io.open(NE0LUV_FILE, 'w')
-
--- if not output then
---     print('Error: Could not open output file at ' .. NE0LUV_FILE)
---     return
--- end
-
--- -- Write the header
--- output:write('--[[\n')
--- output:write('  ne0luv - Some love2d utilities\n')
--- output:write('\n')
--- output:write('  date: 25/03/2024\n')
--- output:write('  author: Abhishek Mishra\n')
--- output:write(']]\n')
-
--- -- Write the module loader
--- output:write('local modules = {}\n')
--- output:write('\n')
-
--- -- Write the modules
--- for _, moduleDef in ipairs(MODULES) do
---     local moduleName = moduleDef.name
---     local moduleFile = moduleDef.codeFile
-
---     print('Merging ' .. moduleName .. ' from ' .. moduleFile)
-
---     local file = io.open(moduleFile, 'r')
-
---     if not file then
---         print('Error: Could not open module file at ' .. moduleFile)
---         return
---     end
-
---     output:write('\n')
---     output:write('-- ' .. moduleName .. '\n')
---     output:write('\n')
-
---     local content = file:read('*a')
---     -- replace "return moduleName" with ""
---     content = content:gsub('return ' .. moduleName .. '%s+', '')
---     -- replace any line which requires a module in the moduleSequence with an empty line.
---     for _, mdef in ipairs(MODULES) do
---         local m = mdef.name
---         content = content:gsub('local ' .. m .. ' = require%(\'' .. m:lower() .. '\'%)', '')
---     end
---     output:write(content)
-
---     file:close()
--- end
-
--- -- Load the modules into the modules table
--- for _, moduleDef in ipairs(MODULES) do
---     local module = moduleDef.name
---     output:write('modules["' .. module .. '"] = ' .. module .. '\n')
--- end
-
--- -- Return the modules table
--- output:write('return modules\n')
-
--- -- Close the output file
--- output:close()
-
--- print('Merged modules into ' .. NE0LUV_FILE)
-
--- -- copy middleclass.lua to dist folder
--- local cmd = 'cp middleclass.lua ' .. OUTPUT_FOLDER
--- print('Executing: ' .. cmd)
--- local handle = io.popen(cmd)
--- if handle == nil then
---     print('Error executing command')
---     return
--- end
--- handle:close()
-
--- print('Done!')
+print('Done!')
