@@ -168,3 +168,15 @@ output:write('return modules\n')
 output:close()
 
 print('Merged modules into ' .. NE0LUV_FILE)
+
+-- copy middleclass.lua to dist folder
+local cmd = 'cp middleclass.lua ' .. OUTPUT_FOLDER
+print('Executing: ' .. cmd)
+local handle = io.popen(cmd)
+if handle == nil then
+    print('Error executing command')
+    return
+end
+handle:close()
+
+print('Done!')
