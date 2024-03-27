@@ -5,7 +5,7 @@ author: Abhishek Mishra
 license: MIT, see LICENSE file for details.
 ---
 
-# Simple 2D/3D Vector Implemenation for Lua
+# Vector
 
 Lua has a minimal standard library and does not have a Vector type.
 
