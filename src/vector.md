@@ -288,6 +288,18 @@ function Vector:cross(v)
 end
 ```
 
+**Example**
+
+```lua
+v1 = Vector(1, 2)
+v2 = Vector(2, 1)
+
+print('Dot product = ', v1:dot(v2))
+-- Dot product =   4
+print('Cross product = ', v1:cross(v2))
+-- Cross product =         Vector(0, 0, -3)
+```
+
 ## Miscellaneous Vector Functions
 
 Two miscellaneous functions are defined here, which do not fit the other
@@ -314,6 +326,22 @@ function Vector:normalize()
         self:set(self.x / m, self.y / m, self.z / m)
     end
 end
+```
+
+**Example**
+
+```lua
+v1 = Vector(0, 1)
+v2 = Vector(1, 0)
+
+print('Distance between ', v1, ' and ', v2, ' = ', v1:dist(v2))
+-- Distance between        Vector(0, 1, 0)  and    Vector(1, 0, 0)  =
+-- 1.4142135623731
+
+v3 = Vector(3, 4)
+v3:normalize()
+print(v3)
+-- Vector(0.6, 0.8, 0.0)
 ```
 
 ## Comparison Operations
@@ -404,6 +432,18 @@ function Vector.random3D()
     local vy = math.sqrt(1 - vz * vz) * math.sin(angle)
     return Vector(vx, vy, vz)
 end
+```
+
+**Example**
+
+```lua
+v = Vector.random2D()
+print(v)
+-- Vector(-0.68295767803921, -0.73045794540637, 0)
+
+u = Vector.random3D()
+print(u)
+-- Vector(-0.79884630076242, -0.35892561180919, -0.48271833707203)
 ```
 
 ## Module Return
