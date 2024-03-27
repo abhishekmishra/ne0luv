@@ -1,3 +1,17 @@
+---
+title: Panel for Love2D
+date: 27/03/2024
+author: Abhishek Mishra
+license: MIT, see LICENSE file for details.
+---
+
+# A UI Panel
+
+This class implements the base class of all UI components in the **ne0luv**
+library.
+
+# Program
+
 ```lua { code_file="panel.lua" }
 --- panel.lua - A panel class
 --
@@ -117,3 +131,7 @@ end
 
 return Panel
 ```
+
+# Future Plans
+
+# Limitations & Known Issues

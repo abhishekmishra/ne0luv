@@ -1,3 +1,10 @@
+---
+title: Rectangular area class
+date: 27/03/2024
+author: Abhishek Mishra
+license: MIT, see LICENSE file for details.
+---
+
 ```lua { code_file="rect.lua" }
 
 local Class = require('middleclass')
