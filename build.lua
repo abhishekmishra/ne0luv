@@ -17,6 +17,10 @@ local SRC_FOLDER = 'src/'
 -- output folder
 local OUTPUT_FOLDER = 'dist/'
 
+-- Define the output file
+local NE0LUV_FILE = OUTPUT_FOLDER .. 'ne0luv.lua'
+
+
 --- Module is a class that represents a module in the ne0luv library.
 local Module = Class('Module')
 
@@ -99,29 +103,6 @@ Module {'Layout', 'layout.md', 'layout.lua', 'layout.html'}
 for _, module in pairs(MODULES) do
     module:generate()
 end
-
--- -- Define the modules to merge
--- local moduleSequence = {
---     'Vector',
---     'Rect',
---     'Panel',
---     'Text',
---     'Button',
---     'Slider',
---     'Layout'
--- }
--- local moduleFiles = {
---     Panel = 'panel.lua',
---     Vector = 'vector.lua',
---     Text = 'text.lua',
---     Button = 'button.lua',
---     Slider = 'slider.lua',
---     Layout = 'layout.lua',
---     Rect = 'rect.lua'
--- }
-
--- Define the output file
-local NE0LUV_FILE = OUTPUT_FOLDER .. 'ne0luv.lua'
 
 -- Open the output file
 local output = io.open(NE0LUV_FILE, 'w')
