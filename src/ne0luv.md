@@ -5,6 +5,11 @@ author: Abhishek Mishra
 license: MIT, see LICENSE file for details.
 ---
 
+# Introduction
+
+This is a literate program named `ne0luv` which defines several utilities for
+building games and simulations using **lua** and **love2d**.
+
 # Common Stuff
 
 ```lua { code_file="ne0luv.lua" }
@@ -1063,6 +1068,24 @@ function Layout:_mousemoved(x, y, dx, dy, istouch)
         child:mousemoved(x, y, dx, dy, istouch)
     end
 end
+```
+
+# Simple State Machine
+
+The implementation of the state machine is based on the description of a simple
+state machine for game states described in [CS50GD by Colton Ogden][4] in the
+[Lecture 1: Flappy Bird][5]. He states that his implementation is in turn based
+on the design of a state machine in the book [How to make an RPG][6] (which I
+have not read but I'm referring here for completeness).
+
+[4]: https://www.youtube.com/playlist?list=PLhQjrBD2T383Vx9-4vJYFsJbvZ_D17Qzh
+[5]: https://www.youtube.com/watch?v=3IdOCxHGMIo
+[6]: https://howtomakeanrpg.com/
+
+## State Machine Orchestrator
+
+```lua { code_file = "ne0luv.lua" }
+
 ```
 
 # Module Export
