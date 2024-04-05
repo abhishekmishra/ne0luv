@@ -1084,9 +1084,6 @@ have not read but I'm referring here for completeness).
 
 ## State Machine Orchestrator
 
-```lua { code_file = "ne0luv.lua" }
-
-```
 
 # Module Export
 
