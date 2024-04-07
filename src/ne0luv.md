@@ -1084,6 +1084,83 @@ have not read but I'm referring here for completeness).
 
 ## State Machine Orchestrator
 
+```lua { code_file="ne0luv.lua" }
+-- The StateMachine class
+local StateMachine = Class('StateMachine')
+
+-- The constructor
+function StateMachine:initialize(states)
+    self.states = states or {}
+    self.current = nil
+end
+
+-- Change the state
+function StateMachine:change(stateName, enterParams)
+    assert(self.states[stateName], 'State ' .. stateName .. ' does not exist')
+
+    -- create an empty table if enterParams is not provided
+    enterParams = enterParams or {}
+
+    -- add the state machine to the enterParams, such that a global reference
+    -- to the state machine is not required.
+    enterParams.Machine = self
+
+    -- exit the current state if it exists
+    if self.current then
+        self.current:exit()
+    end
+
+    -- change the state
+    self.current = self.states[stateName]()
+
+    -- enter the new state
+    self.current:enter(enterParams)
+end
+
+-- Update the current state
+function StateMachine:update(dt)
+    self.current:update(dt)
+end
+
+-- Draw the current state
+function StateMachine:draw()
+    self.current:draw()
+end
+
+```
+
+## Base State
+
+```lua { code_file="ne0luv.lua" }
+local BaseState = Class('BaseState')
+
+-- The constructor
+function BaseState:initialize(config)
+    self.config = config or {}
+end
+
+-- Enter the state
+function BaseState:enter(params)
+    self.enterParams = params
+    self.Machine = self.enterParams.Machine
+end
+
+-- Exit the state
+function BaseState:exit()
+    -- empty exit function
+end
+
+-- Update the state
+function BaseState:update(dt)
+    -- empty update function
+end
+
+-- Draw the state
+function BaseState:draw()
+    -- empty draw function
+end
+```
+
 
 # Module Export
 
@@ -1096,6 +1173,8 @@ ne0luv["Text"] = Text
 ne0luv["Button"] = Button
 ne0luv["Slider"] = Slider
 ne0luv["Layout"] = Layout
+ne0luv["StateMachine"] = StateMachine
+ne0luv["BaseState"] = BaseState
 
 return ne0luv
 ```
