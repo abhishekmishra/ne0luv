@@ -1085,6 +1085,49 @@ have not read but I'm referring here for completeness).
 ## State Machine Orchestrator
 
 ```lua { code_file="ne0luv.lua" }
+--- Define some global love2d handlers
+local function defineGlobalLove2dHandlers()
+    -- reset the keys and mouse buttons pressed
+    love.keyboard.keysPressed = {}
+    love.mouse.buttonsPressed = {}
+
+    --- love.keyboard.wasPressed: Global function to check if a key was pressed
+    -- (checks in the keysPressed table)
+    -- @param key The key to check
+    -- @return true if the key was pressed, false otherwise
+    function love.keyboard.wasPressed(key)
+        return love.keyboard.keysPressed[key]
+    end
+
+    --- love.mouse.wasPressed: Global function to check if a mouse button was pressed
+    -- (checks in the buttonsPressed table)
+    -- @param button The button to check
+    -- @return true if the button was pressed, false otherwise
+    function love.mouse.wasPressed(button)
+        return love.mouse.buttonsPressed[button]
+    end
+
+    --- love.mousepressed: Called when a mouse button is pressed
+    -- @param x The x coordinate of the mouse
+    -- @param y The y coordinate of the mouse
+    -- @param button The button pressed
+    function love.mousepressed(x, y, button)
+        -- update the buttons pressed table with this button
+        love.mouse.buttonsPressed[button] = true
+    end
+
+    -- escape to exit
+    function love.keypressed(key)
+        -- update the keys pressed table with this key
+        love.keyboard.keysPressed[key] = true
+
+        if key == "escape" then
+            love.event.quit()
+        end
+    end
+
+end
+
 -- The StateMachine class
 local StateMachine = Class('StateMachine')
 
@@ -1092,6 +1135,9 @@ local StateMachine = Class('StateMachine')
 function StateMachine:initialize(states)
     self.states = states or {}
     self.current = nil
+
+    -- define global handlers for key and mouse events
+    defineGlobalLove2dHandlers()
 end
 
 -- Change the state
@@ -1110,6 +1156,10 @@ function StateMachine:change(stateName, enterParams)
         self.current:exit()
     end
 
+    -- reset the keys and mouse buttons pressed
+    love.keyboard.keysPressed = {}
+    love.mouse.buttonsPressed = {}
+
     -- change the state
     self.current = self.states[stateName]()
 
@@ -1120,6 +1170,10 @@ end
 -- Update the current state
 function StateMachine:update(dt)
     self.current:update(dt)
+
+    -- reset the keys and mouse buttons pressed
+    love.keyboard.keysPressed = {}
+    love.mouse.buttonsPressed = {}
 end
 
 -- Draw the current state
