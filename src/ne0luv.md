@@ -1142,6 +1142,13 @@ function StateMachine:draw()
     self.current:draw()
 end
 
+--- Resize the current state
+function StateMachine:resize(w, h)
+    if self.current then
+        self.current:resize(w, h)
+    end
+end
+
 --- reset the keys and mouse buttons pressed
 function StateMachine:resetKeys()
     self.keyboard.keysPressed = {}
@@ -1149,12 +1156,23 @@ function StateMachine:resetKeys()
 end
 
 --- keypressed function
-function StateMachine:keypressed(key)
+function StateMachine:keypressed(key, scancode, isrepeat)
     -- update the keys pressed table with this key
     self.keyboard.keysPressed[key] = true
 
     if key == "escape" then
         love.event.quit()
+    end
+
+    if self.current then
+        self.current:keypressed(key, scancode, isrepeat)
+    end
+end
+
+--- keyreleased function
+function StateMachine:keyreleased(key)
+    if self.current then
+        self.current:keyreleased(key)
     end
 end
 
@@ -1195,12 +1213,29 @@ function StateMachine:defineGlobalLove2dHandlers()
         self:mousepressed(x, y, button)
     end
 
+    -- Define the love state management functions
+    -- to call the corresponding state functions
+    -- in the state machine
+    function love.update(dt)
+        self:update(dt)
+    end
+
+    function love.draw()
+        self:draw()
+    end
+
+    function love.resize(w, h)
+        -- empty resize function
+        self:resize(w, h)
+    end
+
     -- escape to exit
-    function love.keypressed(key)
-        if self.current then
-            self.current:keypressed(key)
-        end
-        self:keypressed(key)
+    function love.keypressed(key, scancode, isrepeat)
+        self:keypressed(key, scancode, isrepeat)
+    end
+
+    function love.keyreleased(key)
+        self:keyreleased(key)
     end
 
     function love.mousemoved(x, y, dx, dy, istouch)
@@ -1247,6 +1282,41 @@ end
 -- Draw the state
 function BaseState:draw()
     -- empty draw function
+end
+
+--- Resize the state
+function BaseState:resize(w, h)
+    -- empty resize function
+end
+
+--- keypressed function
+function BaseState:keypressed(key, scancode, isrepeat)
+    -- empty keypressed function
+end
+
+--- keyreleased function
+function BaseState:keyreleased(key)
+    -- empty keyreleased function
+end
+
+--- mousepressed function
+function BaseState:mousepressed(x, y, button, istouch, presses)
+    -- empty mousepressed function
+end
+
+--- mousereleased function
+function BaseState:mousereleased(x, y, button, istouch, presses)
+    -- empty mousereleased function
+end
+
+--- mousemoved function
+function BaseState:mousemoved(x, y, dx, dy, istouch)
+    -- empty mousemoved function
+end
+
+--- textinput function
+function BaseState:textinput(text)
+    -- empty textinput function
 end
 ```
 
