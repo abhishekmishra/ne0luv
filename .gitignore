@@ -43,3 +43,6 @@ dist/
 
 *.swp
 *~
+
+# lua local environment
+.luaenv/

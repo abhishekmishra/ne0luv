@@ -13,6 +13,20 @@
                 "reveal": "always"
             },
             "problemMatcher": []
+        },
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": ".luaenv/bin/activate.ps1 && make build",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
         }
     ]
 }
