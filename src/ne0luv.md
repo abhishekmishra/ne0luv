@@ -1085,48 +1085,6 @@ have not read but I'm referring here for completeness).
 ## State Machine Orchestrator
 
 ```lua { code_file="ne0luv.lua" }
---- Define some global love2d handlers
-local function defineGlobalLove2dHandlers()
-    -- reset the keys and mouse buttons pressed
-    love.keyboard.keysPressed = {}
-    love.mouse.buttonsPressed = {}
-
-    --- love.keyboard.wasPressed: Global function to check if a key was pressed
-    -- (checks in the keysPressed table)
-    -- @param key The key to check
-    -- @return true if the key was pressed, false otherwise
-    function love.keyboard.wasPressed(key)
-        return love.keyboard.keysPressed[key]
-    end
-
-    --- love.mouse.wasPressed: Global function to check if a mouse button was pressed
-    -- (checks in the buttonsPressed table)
-    -- @param button The button to check
-    -- @return true if the button was pressed, false otherwise
-    function love.mouse.wasPressed(button)
-        return love.mouse.buttonsPressed[button]
-    end
-
-    --- love.mousepressed: Called when a mouse button is pressed
-    -- @param x The x coordinate of the mouse
-    -- @param y The y coordinate of the mouse
-    -- @param button The button pressed
-    function love.mousepressed(x, y, button)
-        -- update the buttons pressed table with this button
-        love.mouse.buttonsPressed[button] = true
-    end
-
-    -- escape to exit
-    function love.keypressed(key)
-        -- update the keys pressed table with this key
-        love.keyboard.keysPressed[key] = true
-
-        if key == "escape" then
-            love.event.quit()
-        end
-    end
-
-end
 
 -- The StateMachine class
 local StateMachine = Class('StateMachine')
@@ -1136,8 +1094,11 @@ function StateMachine:initialize(states)
     self.states = states or {}
     self.current = nil
 
+    self.keyboard = {}
+    self.mouse = {}
+
     -- define global handlers for key and mouse events
-    defineGlobalLove2dHandlers()
+    self:defineGlobalLove2dHandlers()
 end
 
 -- Change the state
@@ -1179,6 +1140,80 @@ end
 -- Draw the current state
 function StateMachine:draw()
     self.current:draw()
+end
+
+--- reset the keys and mouse buttons pressed
+function StateMachine:resetKeys()
+    self.keyboard.keysPressed = {}
+    self.mouse.buttonsPressed = {}
+end
+
+--- keypressed function
+function StateMachine:keypressed(key)
+    -- update the keys pressed table with this key
+    self.keyboard.keysPressed[key] = true
+
+    if key == "escape" then
+        love.event.quit()
+    end
+end
+
+function StateMachine:mousepressed(x, y, button)
+    -- update the buttons pressed table with this button
+    self.mouse.buttonsPressed[button] = button
+    self.mouse.location = {
+        ["x"] = x,
+        ["y"] = y
+    }
+end
+
+--- Define some global love2d handlers
+function StateMachine:defineGlobalLove2dHandlers()
+    self:resetKeys()
+
+    --- love.keyboard.wasPressed: Global function to check if a key was pressed
+    -- (checks in the keysPressed table)
+    -- @param key The key to check
+    -- @return true if the key was pressed, false otherwise
+    function self.keyboard.wasPressed(key)
+        return self.keyboard.keysPressed[key]
+    end
+
+    --- love.mouse.wasPressed: Global function to check if a mouse button was pressed
+    -- (checks in the buttonsPressed table)
+    -- @param button The button to check
+    -- @return true if the button was pressed, false otherwise
+    function self.mouse.wasPressed(button)
+        return self.mouse.buttonsPressed[button]
+    end
+
+    --- love.mousepressed: Called when a mouse button is pressed
+    -- @param x The x coordinate of the mouse
+    -- @param y The y coordinate of the mouse
+    -- @param button The button pressed
+    function love.mousepressed(x, y, button)
+        self:mousepressed(x, y, button)
+    end
+
+    -- escape to exit
+    function love.keypressed(key)
+        if self.current then
+            self.current:keypressed(key)
+        end
+        self:keypressed(key)
+    end
+
+    function love.mousemoved(x, y, dx, dy, istouch)
+        if self.current then
+            self.current:mousemoved(x, y, dx, dy, istouch)
+        end
+    end
+
+    function love.textinput(text)
+        if self.current then
+            self.current:textinput(text)
+        end
+    end
 end
 
 ```
