@@ -547,6 +547,7 @@ local Panel = Class('Panel')
 function Panel:initialize(rect)
     self.rect = rect or Rect(0, 0, PANEL_DEFAULT_WIDTH, PANEL_DEFAULT_HEIGHT)
     self.parent = nil
+    self.shown = true
 end
 
 function Panel:setParent(parent)
@@ -559,11 +560,11 @@ end
 
 -- Lifecycle methods
 function Panel:show()
-    -- Code to show the panel
+    self.shown = true
 end
 
 function Panel:hide()
-    -- Code to hide the panel
+    self.shown = false
 end
 
 function Panel:update(dt)
@@ -573,9 +574,11 @@ end
 --- set the position of the panel and then draw using internal _draw method
 -- Subclasses should override the _draw method
 function Panel:draw()
-    love.graphics.push()
-    self:_draw()
-    love.graphics.pop()
+    if self.shown then
+        love.graphics.push()
+        self:_draw()
+        love.graphics.pop()
+    end
 end
 
 function Panel:_draw()
