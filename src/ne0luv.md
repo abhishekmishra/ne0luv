@@ -706,20 +706,23 @@ local Button = Class('Button', Panel)
 Button.static.idCounter = 0
 
 --- constructor
---@param displayText the text to display on the button
---@param onActivate the function to call when the button is activated
-function Button:initialize(dim, displayText, onActivate, colors)
-    Panel.initialize(self, dim)
+--@param rect dimensions of the panel
+--@param config the configuration options for the button
+function Button:initialize(rect, config)
+    Panel.initialize(self, rect)
+    self.config = config
     Button.idCounter = Button.idCounter + 1
     self.id = 'Button' .. Button.idCounter
-    self.displayText = displayText
-    self.onActivate = onActivate or function() end
-    self.text = love.graphics.newText(love.graphics.getFont(), self.displayText)
-    self.colors = colors or {
-        bg = { 0.5, 0.5, 0.5, 1 },
-        fg = { 1, 1, 1, 1 },
-        bgSelect = { 0.7, 0.7, 0.7, 1 },
-        fgSelect = { 0, 0, 0, 1 }
+    self.displayText = self.config.text
+    self.onActivate = self.config.onActivate or function() end
+    -- self.text = love.graphics.newText(love.graphics.getFont(), self.displayText)
+    self.font = self.config.font
+    self.align = self.config.align or "left"
+    self.colors = {
+        bg = self.config.bgColor,
+        fg = self.config.fgColor,
+        bgSelect = self.config.bgSelectColor or self.config.bgColor,
+        fgSelect = self.config.fgSelectColor or self.config.fgColor
     }
 end
 
@@ -738,15 +741,9 @@ function Button:setSelected(selected)
     self.select = selected
 end
 
---- run the onActivate function
-function Button:activate()
-    self.onActivate()
-end
-
 --- draw the button
 function Button:_draw()
     local bgColor, fgColor
-    love.graphics.push()
     if self:isSelected() then
         bgColor = self.colors.bgSelect
         fgColor = self.colors.fgSelect
@@ -755,10 +752,10 @@ function Button:_draw()
         fgColor = self.colors.fg
     end
     love.graphics.setColor(bgColor)
-    love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
+    love.graphics.rectangle('fill', self:getX(), self:getY(), self:getWidth(), self:getHeight())
     love.graphics.setColor(fgColor)
-    love.graphics.draw(self.text, self.x + 10, self.y + 10)
-    love.graphics.pop()
+    love.graphics.setFont(self.font)
+    love.graphics.printf(self.displayText, self:getX(), self:getY(), self:getWidth(), self.align)
 end
 
 function Button:_mouseout()
@@ -766,23 +763,11 @@ function Button:_mouseout()
 end
 
 function Button:_mousemoved(x, y, dx, dy, istouch)
-    if self:contains(x, y) then
-        self:setSelected(true)
-    else
-        self:setSelected(false)
-    end
+    self:setSelected(true)
 end
 
 function Button:_mousepressed(x, y, button, istouch, presses)
-    if self:contains(x, y) then
-        self:activate()
-    end
-end
-
--- contains - check if the button contains the point x, y
-function Button:contains(x, y)
-    return x >= 0 and x <= self.width and
-        y >= 0 and y <= self.height
+    self.onActivate()
 end
 ```
 
@@ -1179,13 +1164,16 @@ function StateMachine:keyreleased(key)
     end
 end
 
-function StateMachine:mousepressed(x, y, button)
+function StateMachine:mousepressed(x, y, button, istouch, presses)
     -- update the buttons pressed table with this button
     self.mouse.buttonsPressed[button] = button
     self.mouse.location = {
         ["x"] = x,
         ["y"] = y
     }
+    if self.current then
+        self.current:mousepressed(x, y, button, istouch, presses)
+    end
 end
 
 --- Define some global love2d handlers
