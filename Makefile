@@ -28,11 +28,16 @@ else
 	bash -c "source .luaenv/bin/activate; luarocks install luafilesystem"
 endif
 
-build:
+build: clean
 	@echo "Building..."
 	mkdir -p dist/
 ifeq ($(OSFLAG),WIN32)
-	".luaenv/bin/activate.ps1 ; lua ./build.lua"
+	".luaenv/bin/activate.ps1 ; ua ./litpd/litpd.lua src/ne0luv.md --to=html --standalone --toc --output=dist/ne0luv.html"
 else
-	bash -c "source .luaenv/bin/activate; lua ./build.lua"
+	bash -c "source .luaenv/bin/activate; lua ./litpd/litpd.lua src/ne0luv.md --to=html --standalone --toc --output=dist/ne0luv.html"
 endif
+	mv ne0luv.lua dist/
+
+clean:
+	@echo "Cleaning..."
+	rm -f dist/*
