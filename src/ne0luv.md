@@ -1196,6 +1196,7 @@ function StateMachine:defineGlobalLove2dHandlers()
         return self.mouse.buttonsPressed[button]
     end
 
+    ---@diagnostic disable-next-line: duplicate-set-field
     --- love.mousepressed: Called when a mouse button is pressed
     -- @param x The x coordinate of the mouse
     -- @param y The y coordinate of the mouse
@@ -1204,6 +1205,7 @@ function StateMachine:defineGlobalLove2dHandlers()
         self:mousepressed(x, y, button)
     end
 
+    ---@diagnostic disable-next-line: duplicate-set-field
     -- Define the love state management functions
     -- to call the corresponding state functions
     -- in the state machine
@@ -1211,24 +1213,27 @@ function StateMachine:defineGlobalLove2dHandlers()
         self:update(dt)
     end
 
+    ---@diagnostic disable-next-line: duplicate-set-field
     function love.draw()
         self:draw()
     end
 
+    ---@diagnostic disable-next-line: duplicate-set-field
     function love.resize(w, h)
-        -- empty resize function
         self:resize(w, h)
     end
 
-    -- escape to exit
+    ---@diagnostic disable-next-line: duplicate-set-field
     function love.keypressed(key, scancode, isrepeat)
         self:keypressed(key, scancode, isrepeat)
     end
 
+    ---@diagnostic disable-next-line: duplicate-set-field
     function love.keyreleased(key)
         self:keyreleased(key)
     end
 
+    ---@diagnostic disable-next-line: duplicate-set-field
     function love.mousemoved(x, y, dx, dy, istouch)
         if self.current then
             self.current:mousemoved(x, y, dx, dy, istouch)
