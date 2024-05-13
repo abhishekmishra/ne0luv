@@ -31,4 +31,8 @@ endif
 build:
 	@echo "Building..."
 	mkdir -p dist/
-	lua ./build.lua
+ifeq ($(OSFLAG),WIN32)
+	".luaenv/bin/activate.ps1 ; lua ./build.lua"
+else
+	bash -c "source .luaenv/bin/activate; lua ./build.lua"
+endif
