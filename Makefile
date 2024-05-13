@@ -30,4 +30,5 @@ endif
 
 build:
 	@echo "Building..."
+	mkdir -p dist/
 	lua ./build.lua
