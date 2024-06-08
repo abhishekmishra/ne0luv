@@ -5,6 +5,12 @@ author: Abhishek Mishra
 license: MIT, see LICENSE file for details.
 ---
 
+__Version History__
+
+|Version      |Date      |Comment            |
+|------------:|---------:|:------------------|
+|0.1.0-alpha.0|06/08/2024|First alpha release with Vector and some GUI Utils|
+
 # Introduction
 
 This is a literate program named `ne0luv` which defines several utilities for
