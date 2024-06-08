@@ -19,6 +19,12 @@ building games and simulations using **lua** and **love2d**.
 # Common Stuff
 
 ```lua { code_file="ne0luv.lua" }
+
+@<neoluvheader@>
+
+```
+
+```lua { code_id="neoluvheader" }
 --[[
   ne0luv - Some love2d utilities
 
@@ -75,6 +81,28 @@ standard documentation format. All the class and method documentation in the
 program also uses the same format.
 
 ```lua { code_file="ne0luv.lua" }
+@<vectorheader@>
+
+@<vectorclassdef@>
+
+@<vectorprint@>
+
+@<vectorcopy@>
+
+@<vectorarithmetic@>
+
+@<vectormeasure@>
+
+@<vectorproduct@>
+
+@<vectormiscellaneous@>
+
+@<vectorcomparison@>
+
+@<vectorrandom@>
+```
+
+```lua { code_id="vectorheader" }
 --- vector.lua - A simple vector class. Similar to the Vector implementation in
 -- the p5.js library.
 --
@@ -105,7 +133,7 @@ together.
 The `x`, `y` and `z` values can also be changed individually by directly setting
 the values by assignment.
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="vectorclassdef" }
 --- Vector class
 local Vector = Class('Vector')
 
@@ -153,7 +181,7 @@ v3d.x = 8
 We override the `__tostring` metamethod to provide a readable respresentation
 for the Vector when printing to a console or for other debugging use-cases.
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="vectorprint" }
 
 --- tostring operator overloading
 function Vector:__tostring()
@@ -178,7 +206,7 @@ Cloning/copying a vector is a common alternate way of constructing a new vector
 instance useful in many contexts. The `copy` method simply returns a new
 instance with the same components.
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="vectorcopy" }
 
 --- copy the vector
 function Vector:copy()
@@ -206,7 +234,7 @@ use this to enable common-sense arithmetic for our Vector class.
 Addition/Subtraction of another vector, multiplication and division by a scalar
 value are supported via the Lua `+, -, *, and /` operators.
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="vectorarithmetic" }
 
 --- add a vector to this vector using the lua operator overloading
 --@param v the vector to add
@@ -249,7 +277,7 @@ root of the sum of the squares of its components.
   current vector but its magnitude is at most the argument provided to the
   method.
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="vectormeasure" }
 
 --- get the magnitude of the vector
 function Vector:mag()
@@ -293,7 +321,7 @@ end
 The methods `dot` and `cross` provide the two vector products. They return a new
 vector as the result.
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="vectorproduct" }
 
 --- dot product of this vector with another vector
 --@param v the other vector
@@ -335,7 +363,7 @@ categories.
    heading remains the same, but its magnitude becomes `1`. This method modifies
    the vector.
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="vectormiscellaneous" }
 
 --- distance between this vector and another vector
 --@param v the other vector
@@ -383,7 +411,7 @@ implementations are simple and self-explanatory. The operators implemented are:
 7. Greater than
 8. Greater than or equals
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="vectorcomparison" }
 
 --- equals operator overloading
 --@param v the other vector
@@ -438,7 +466,7 @@ Sometimes we need to create one or more vectors with a random heading. The
 `random2D` and `random3D` methods create new 2D and 3D vectors with a random
 heading. These tow vectors are **static** and return new vector instances.
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="vectorrandom" }
 
 --- create a random 2D vector
 --@return a random 2D vector
