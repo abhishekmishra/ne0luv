@@ -22,6 +22,7 @@ building games and simulations using **lua** and **love2d**.
 
 @<neoluvheader@>
 
+@<vectorprogram@>
 ```
 
 ```lua { code_id="neoluvheader" }
@@ -74,13 +75,7 @@ The implemenation tries to provide a public API similar to the [p5js Vector
 implementation][2]. Since Lua has operator overloading via certain special
 methods, we use this mechanism to provide arithmetic operations for vectors.
 
-### Header
-
-The header is self-explanatory and provides some minimal info about the file in
-standard documentation format. All the class and method documentation in the
-program also uses the same format.
-
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="vectorprogram" }
 @<vectorheader@>
 
 @<vectorclassdef@>
@@ -101,6 +96,12 @@ program also uses the same format.
 
 @<vectorrandom@>
 ```
+
+### Header
+
+The header is self-explanatory and provides some minimal info about the file in
+standard documentation format. All the class and method documentation in the
+program also uses the same format.
 
 ```lua { code_id="vectorheader" }
 --- vector.lua - A simple vector class. Similar to the Vector implementation in
@@ -1353,7 +1354,14 @@ end
 
 # Module Export
 
+TODO: remove this when all sequential parts are renamed as code_ids.
+
 ```lua { code_file="ne0luv.lua" }
+@<moduledeclaration@>
+```
+
+
+```lua { code_id="moduledeclaration" }
 
 ne0luv["Vector"] = Vector
 ne0luv["Rect"] = Rect
