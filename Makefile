@@ -37,7 +37,9 @@ else
 	bash -c "source .luaenv/bin/activate; lua ./litpd/litpd.lua src/ne0luv.md --to=html --standalone --toc --output=dist/ne0luv.html"
 endif
 	mv ne0luv.lua dist/
+	rm -f *.tmp
 
 clean:
 	@echo "Cleaning..."
+	rm -f *.tmp
 	rm -f dist/*
