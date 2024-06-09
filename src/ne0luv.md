@@ -16,14 +16,32 @@ __Version History__
 This is a literate program named `ne0luv` which defines several utilities for
 building games and simulations using **lua** and **love2d**.
 
-# Common Stuff
-
 ```lua { code_file="ne0luv.lua" }
 
 @<neoluvheader@>
 
 @<vectorprogram@>
+
+@<rect@>
+
+@<panel@>
+
+@<text@>
+
+@<button@>
+
+@<slider@>
+
+@<layout@>
+
+@<statemachine@>
+
+@<basestate@>
+
+@<moduledeclaration@>
 ```
+
+# Common Stuff
 
 ```lua { code_id="neoluvheader" }
 --[[
@@ -32,10 +50,8 @@ building games and simulations using **lua** and **love2d**.
   date: 25/03/2024
   author: Abhishek Mishra
 ]]
-local ne0luv = {}
 
 local Class = require('middleclass')
-
 ```
 
 # Vector
@@ -513,7 +529,7 @@ local v = Vector { 1, 2, 0 }
 
 # Rect
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="rect" }
 
 local Rect = Class('Rect')
 
@@ -568,7 +584,7 @@ library.
 
 ## Program
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="panel" }
 
 -- Default values for the panel
 local PANEL_DEFAULT_WIDTH = 100
@@ -687,7 +703,7 @@ end
 
 # Text
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="text" }
 --- text.lua - A panel class that displays a single line of text
 --
 -- date: 17/02/2024
@@ -728,7 +744,7 @@ end
 
 # Button
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="button" }
 --- button.lua - A simple button class
 --
 -- date: 17/02/2024
@@ -808,7 +824,7 @@ end
 
 # Slider
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="slider" }
 -- Define the Slider class that extends the Panel class
 local Slider = Class('Slider', Panel)
 
@@ -928,7 +944,7 @@ end
 
 # Layout
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="layout" }
 -- Define the Layout class that extends the Panel class
 local Layout = Class('Layout', Panel)
 
@@ -1107,7 +1123,7 @@ have not read but I'm referring here for completeness).
 
 ## State Machine Orchestrator
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="statemachine" }
 
 -- The StateMachine class
 local StateMachine = Class('StateMachine')
@@ -1286,7 +1302,7 @@ end
 
 ## Base State
 
-```lua { code_file="ne0luv.lua" }
+```lua { code_id="basestate" }
 local BaseState = Class('BaseState')
 
 -- The constructor
@@ -1351,17 +1367,14 @@ function BaseState:textinput(text)
 end
 ```
 
-
 # Module Export
 
-TODO: remove this when all sequential parts are renamed as code_ids.
-
-```lua { code_file="ne0luv.lua" }
-@<moduledeclaration@>
-```
-
+- The `ne0luv` lua module returns only one value, which is a table.
+- The table has entries for every declaration in the current file which is to be
+  exported.
 
 ```lua { code_id="moduledeclaration" }
+local ne0luv = {}
 
 ne0luv["Vector"] = Vector
 ne0luv["Rect"] = Rect
