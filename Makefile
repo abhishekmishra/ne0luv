@@ -32,9 +32,9 @@ build: clean
 	@echo "Building..."
 	mkdir -p dist/
 ifeq ($(OSFLAG),WIN32)
-	powershell ".luaenv/bin/activate.ps1 ; lua ./litpd/litpd.lua src/ne0luv.md --to=html --standalone --toc --output=dist/ne0luv.html"
+	pwsh -Command ".luaenv/bin/activate.ps1 ; $(LITPD_HOME)/litpd.ps1 src/ne0luv.md --to=html --standalone --toc --output=dist/ne0luv.html"
 else
-	bash -c "source .luaenv/bin/activate; lua ./litpd/litpd.lua src/ne0luv.md --to=html --standalone --toc --output=dist/ne0luv.html"
+	bash -c "source .luaenv/bin/activate; $(LITPD_HOME)/litpd.sh src/ne0luv.md --to=html --standalone --toc --output=dist/ne0luv.html"
 endif
 	mv ne0luv.lua dist/
 	rm -f *.tmp
