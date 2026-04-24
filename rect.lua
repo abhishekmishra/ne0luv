@@ -1,5 +1,8 @@
-local Class = require 'lib.middleclass'
-local Vector = require 'vector'
+local module_name = ...
+local root = assert(module_name:match("^(.*)%.rect$"))
+
+local Class = require(root .. '.middleclass')
+local Vector = require(root .. '.vector')
 
 local Rect = Class('Rect')
 
@@ -48,3 +51,5 @@ end
 function Rect:setHeight(h)
     self.dim.y = h
 end
+
+return Rect

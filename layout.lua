@@ -1,5 +1,8 @@
-local Class = require 'lib.middleclass'
-local Panel = require 'panel'
+local module_name = ...
+local root = assert(module_name:match("^(.*)%.layout$"))
+
+local Class = require(root .. '.middleclass')
+local Panel = require(root .. '.panel')
 
 -- Define the Layout class that extends the Panel class
 local Layout = Class('Layout', Panel)
@@ -170,3 +173,5 @@ function Layout:_mouseout()
         child:_mouseout()
     end
 end
+
+return Layout

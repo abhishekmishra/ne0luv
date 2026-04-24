@@ -4,8 +4,11 @@
 -- author: Abhishek Mishra
 
 -- Define the Text class that extends the Panel class
-local Class = require 'lib.middleclass'
-local Panel = require 'panel'
+local module_name = ...
+local root = assert(module_name:match("^(.*)%.text$"))
+
+local Class = require(root .. '.middleclass')
+local Panel = require(root .. '.panel')
 
 local Text = Class('Text', Panel)
 
@@ -37,3 +40,5 @@ function Text:_draw()
     love.graphics.setFont(self.font)
     love.graphics.printf(self.displayText, self:getX(), self:getY(), self:getWidth(), self.align)
 end
+
+return Text

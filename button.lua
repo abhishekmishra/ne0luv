@@ -4,8 +4,11 @@
 -- author: Abhishek Mishra
 
 --- Button class
-local Class = require 'lib.middleclass'
-local Panel = require 'panel'
+local module_name = ...
+local root = assert(module_name:match("^(.*)%.button$"))
+
+local Class = require(root .. '.middleclass')
+local Panel = require(root .. '.panel')
 
 local Button = Class('Button', Panel)
 
@@ -76,3 +79,5 @@ end
 function Button:_mousepressed(x, y, button, istouch, presses)
     self.onActivate()
 end
+
+return Button

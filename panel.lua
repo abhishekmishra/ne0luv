@@ -1,5 +1,8 @@
-local Class = require 'lib.middleclass'
-local Rect = require 'rect'
+local module_name = ...
+local root = assert(module_name:match("^(.*)%.panel$"))
+
+local Class = require(root .. '.middleclass')
+local Rect = require(root .. '.rect')
 
 -- Default values for the panel
 local PANEL_DEFAULT_WIDTH = 100
@@ -110,3 +113,5 @@ end
 function Panel:setY(y)
     self.rect:setY(y)
 end
+
+return Panel

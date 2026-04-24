@@ -1,5 +1,8 @@
-local Class = require 'lib.middleclass'
-local Panel = require 'panel'
+local module_name = ...
+local root = assert(module_name:match("^(.*)%.slider$"))
+
+local Class = require(root .. '.middleclass')
+local Panel = require(root .. '.panel')
 
 -- Define the Slider class that extends the Panel class
 local Slider = Class('Slider', Panel)
@@ -116,3 +119,5 @@ end
 -- function Slider:setY(y)
 --     self.rect:setY(y)
 -- end
+
+return Slider
