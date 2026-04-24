@@ -38,7 +38,7 @@ end
 function Text:_draw()
     love.graphics.setColor(self.fgColor)
     love.graphics.setFont(self.font)
-    love.graphics.printf(self.displayText, self:getX(), self:getY(), self:getWidth(), self.align)
+    love.graphics.printf(self.displayText, 0, 0, self:getWidth(), self.align)
 end
 
 return Text

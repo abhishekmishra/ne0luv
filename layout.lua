@@ -33,11 +33,13 @@ function Layout:addChild(c)
         local startPos = 0
         for _, child in ipairs(self.children) do
             child:setX(startPos)
+            child:setY(0)
             startPos = startPos + child:getWidth()
         end
     else -- layout is column
         local startPos = 0
         for _, child in ipairs(self.children) do
+            child:setX(0)
             child:setY(startPos)
             startPos = startPos + child:getHeight()
         end
@@ -45,45 +47,11 @@ function Layout:addChild(c)
 end
 
 function Layout:setX(x)
-    -- set the x position of the layout
-    local prevX = self:getX()
     self.rect:setX(x)
-    local diff = x - prevX
-    -- update the x position of all the children
-    -- if layout is row
-    if self.layout == 'row' then
-        -- adjust the x position of all the children
-        for _, child in ipairs(self.children) do
-            child:setX(child:getX() + diff)
-        end
-    end
-    if self.layout == 'column' then
-        -- adjust the x position of all the children
-        for _, child in ipairs(self.children) do
-            child:setX(self:getX())
-        end
-    end
 end
 
 function Layout:setY(y)
-    -- set the y position of the layout
-    local prevY = self:getY()
     self.rect:setY(y)
-    local diff = y - prevY
-    -- update the y position of all the children
-    -- if layout is row
-    if self.layout == 'row' then
-        -- adjust the y position of all the children
-        for _, child in ipairs(self.children) do
-            child:setY(self:getY())
-        end
-    end
-    if self.layout == 'column' then
-        -- adjust the y position of all the children
-        for _, child in ipairs(self.children) do
-            child:setY(child:getY() + diff)
-        end
-    end
 end
 
 -- Get children
@@ -98,8 +66,8 @@ end
 
 -- show method
 function Layout:show()
+    Panel.show(self)
     -- Iterate over child components and show them
-    local startPos = 0
     for _, child in ipairs(self.children) do
         child:show()
     end
@@ -107,6 +75,7 @@ end
 
 -- hide method
 function Layout:hide()
+    Panel.hide(self)
     -- Iterate over child components and hide them
     for _, child in ipairs(self.children) do
         child:hide()
@@ -117,7 +86,7 @@ end
 function Layout:_draw()
     -- Draw the background
     love.graphics.setColor(self.bgColor)
-    love.graphics.rectangle('fill', self:getX(), self:getY(), self:getWidth(), self:getHeight())
+    love.graphics.rectangle('fill', 0, 0, self:getWidth(), self:getHeight())
     -- Iterate over child components and draw them
     for _, child in ipairs(self.children) do
         child:draw()
@@ -144,16 +113,20 @@ end
 function Layout:_mousepressed(x, y, button, istouch, presses)
     -- print("Layout:_mousepressed [" .. x .. ", " .. y .. "]")
     -- Iterate over child components and pass the mousepress event
+    local localX = x - self:getX()
+    local localY = y - self:getY()
     for _, child in ipairs(self.children) do
-        child:mousepressed(x, y, button, istouch, presses)
+        child:mousepressed(localX, localY, button, istouch, presses)
     end
 end
 
 -- Override the mousereleased method
 function Layout:_mousereleased(x, y, button, istouch, presses)
     -- Iterate over child components and pass the mouserelease event
+    local localX = x - self:getX()
+    local localY = y - self:getY()
     for _, child in ipairs(self.children) do
-        child:mousereleased(x, y, button, istouch, presses)
+        child:mousereleased(localX, localY, button, istouch, presses)
     end
 end
 
@@ -161,8 +134,10 @@ end
 function Layout:_mousemoved(x, y, dx, dy, istouch)
     -- print("Layout:_mousemoved [" .. x .. ", " .. y .. "]")
     -- Iterate over child components and pass the mousemove event
+    local localX = x - self:getX()
+    local localY = y - self:getY()
     for _, child in ipairs(self.children) do
-        child:mousemoved(x, y, dx, dy, istouch)
+        child:mousemoved(localX, localY, dx, dy, istouch)
     end
 end
 
