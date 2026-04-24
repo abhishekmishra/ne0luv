@@ -1,3 +1,37 @@
+--- Base class for ne0luv UI panels.
+-- `Panel` defines the canonical drawing and hit-testing contract for UI
+-- components in ne0luv.
+--
+-- Behaviour:
+--
+-- - A `Panel` owns a `Rect` that defines its position and bounds.
+-- - The `Rect` position and size are accessed through the `Rect`
+--   getter/setter API.
+-- - A `Panel` is visible when `shown == true`.
+-- - `Panel:draw()` manages Love2D graphics state for the panel.
+-- - Before calling `Panel:_draw()`, `Panel:draw()` translates the Love2D
+--   transform to the panel origin.
+-- - `Panel:_draw()` renders in panel-local coordinates, with the panel's
+--   top-left at `(0, 0)`.
+-- - `Panel` does not apply clipping by default.
+-- - Panel bounds are used for hit testing.
+-- - `Panel:mousepressed()` forwards to `Panel:_mousepressed()` only when the
+--   press is inside the panel bounds.
+-- - `Panel:mousereleased()` forwards to `Panel:_mousereleased()` only when the
+--   release is inside the panel bounds.
+-- - `Panel:mousemoved()` forwards to `Panel:_mousemoved()` when the pointer is
+--   inside the panel bounds; otherwise it calls `Panel:_mouseout()`.
+-- - Hidden panels do not draw.
+-- - Hidden panels ignore mouse input.
+--
+-- Out of scope for the base `Panel` contract in the current implementation:
+--
+-- - clipping
+-- - child management
+-- - parent-relative input reconciliation
+-- - input capture
+--
+-- @classmod Panel
 local module_name = ...
 local root = assert(module_name:match("^(.*)%.panel$"))
 
@@ -11,8 +45,9 @@ local PANEL_DEFAULT_HEIGHT = 100
 -- Define the Panel class
 local Panel = Class('Panel')
 
---- Constructor for the Panel class
---@param dim the dimensions of the panel
+--- Create a new panel.
+-- @tparam[opt] Rect rect Bounds for the panel. Defaults to a 100x100 panel at
+-- `(0, 0)`.
 function Panel:initialize(rect)
     self.rect = rect or Rect(0, 0, PANEL_DEFAULT_WIDTH, PANEL_DEFAULT_HEIGHT)
     self.parent = nil
@@ -40,11 +75,13 @@ function Panel:update(dt)
     -- Code to update the panel
 end
 
---- set the position of the panel and then draw using internal _draw method
--- Subclasses should override the _draw method
+--- Draw the panel in its local coordinate space.
+-- `Panel:draw()` translates the Love2D transform to the panel origin before
+-- calling `Panel:_draw()`.
 function Panel:draw()
     if self.shown then
         love.graphics.push()
+        love.graphics.translate(self:getX(), self:getY())
         self:_draw()
         love.graphics.pop()
     end
@@ -59,7 +96,7 @@ function Panel:keypressed(key)
 end
 
 function Panel:mousepressed(x, y, button, istouch, presses)
-    if self.rect:contains(x, y) then
+    if self.shown and self.rect:contains(x, y) then
         self:_mousepressed(x, y, button, istouch, presses)
     end
 end
@@ -68,7 +105,7 @@ function Panel:_mousepressed(x, y, button, istouch, presses)
 end
 
 function Panel:mousereleased(x, y, button, istouch, presses)
-    if self.rect:contains(x, y) then
+    if self.shown and self.rect:contains(x, y) then
         self:_mousereleased(x, y, button, istouch, presses)
     end
 end
@@ -77,6 +114,10 @@ function Panel:_mousereleased(x, y, button, istouch, presses)
 end
 
 function Panel:mousemoved(x, y, dx, dy, istouch)
+    if not self.shown then
+        return
+    end
+
     if self.rect:contains(x, y) then
         self:_mousemoved(x, y, dx, dy, istouch)
     else

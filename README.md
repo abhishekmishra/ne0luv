@@ -1,3 +1,31 @@
 # ne0luv
 
-Love2d UI, state management, math and miscellaneous utils.
+Love2d UI, state management, math and miscellaneous utilities.
+
+The utilities are implemented as reusable classes using the excellent [middleclass](https://github.com/kikito/middleclass) library.
+
+## Documentation
+
+API docs in source files should use [LDoc](https://lunarmodules.github.io/ldoc/manual/manual.md.html) format rather than LuaDoc. Keep canonical implementation contracts close to the relevant class or module, and keep `README.md` focused on the user-facing overview.
+
+# Vector
+
+The `Vector` module in `vector.lua` implments a simple Vector API similar to the
+`Vector` API in `p5.js` [p5.Vector](https://p5js.org/reference/p5/p5.Vector/)
+
+# UI
+
+## Rect
+
+Simple utility class that represents a rectangular area initialized with four arguments `x`, `y`, `w`, `h`. Internally these are represented by two vectors - one for position and one for dimensions.
+
+## Panel
+
+- The `Panel` class is the parent class of all UI classes.
+- Each `Panel` owns a `Rect` that defines its position and bounds.
+- `Panel:draw()` translates the Love2D transform to the panel origin before drawing.
+- Subclasses implement `_draw()` in panel-local coordinates, with `(0, 0)` at the panel's top-left.
+- Each `Panel` can have a parent panel. The top-level `Panel` has no parent.
+- By default, `Panel` does not apply clipping.
+- Mouse callbacks use the panel bounds for hit testing.
+- Hidden panels do not draw and ignore mouse input.
