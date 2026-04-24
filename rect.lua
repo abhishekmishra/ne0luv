@@ -9,6 +9,10 @@ function Rect:initialize(x, y, w, h)
 end
 
 function Rect:contains(x, y)
+    if x == nil or y == nil then
+        return false
+    end
+
     return (x >= self.pos.x and x <= self.pos.x + self.dim.x
         and y >= self.pos.y and y <= self.pos.y + self.dim.y)
 end

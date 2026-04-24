@@ -162,3 +162,11 @@ function Layout:_mousemoved(x, y, dx, dy, istouch)
         child:mousemoved(x, y, dx, dy, istouch)
     end
 end
+
+-- Override the mouseout method
+function Layout:_mouseout()
+    -- Iterate over child components and pass the mouseout event
+    for _, child in ipairs(self.children) do
+        child:_mouseout()
+    end
+end
