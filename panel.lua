@@ -5,6 +5,8 @@
 -- Behaviour:
 --
 -- - A `Panel` owns a `Rect` that defines its position and bounds.
+-- - A `Panel` constructor accepts either a `Rect` instance or a rect
+--   specification table with named fields `x`, `y`, `w`, and `h`.
 -- - The `Rect` position and size are accessed through the `Rect`
 --   getter/setter API.
 -- - A `Panel` is visible when `shown == true`.
@@ -42,14 +44,35 @@ local Rect = require(root .. '.rect')
 local PANEL_DEFAULT_WIDTH = 100
 local PANEL_DEFAULT_HEIGHT = 100
 
+local function _normalize_rect(rect)
+    if rect == nil then
+        return Rect(0, 0, PANEL_DEFAULT_WIDTH, PANEL_DEFAULT_HEIGHT)
+    end
+
+    if type(rect) ~= 'table' then
+        error("Panel rect must be a Rect or a table with x, y, w, h", 3)
+    end
+
+    if rect.isInstanceOf and rect:isInstanceOf(Rect) then
+        return rect
+    end
+
+    if rect.x == nil or rect.y == nil or rect.w == nil or rect.h == nil then
+        error("Panel rect table must define x, y, w, and h", 3)
+    end
+
+    return Rect(rect.x, rect.y, rect.w, rect.h)
+end
+
 -- Define the Panel class
 local Panel = Class('Panel')
 
 --- Create a new panel.
--- @tparam[opt] Rect rect Bounds for the panel. Defaults to a 100x100 panel at
--- `(0, 0)`.
+-- @tparam[opt] Rect|table rect Bounds for the panel. Accepts either a `Rect`
+-- instance or a table `{ x = ..., y = ..., w = ..., h = ... }`. Partial rect
+-- tables are invalid. Defaults to a 100x100 panel at `(0, 0)`.
 function Panel:initialize(rect)
-    self.rect = rect or Rect(0, 0, PANEL_DEFAULT_WIDTH, PANEL_DEFAULT_HEIGHT)
+    self.rect = _normalize_rect(rect)
     self.parent = nil
     self.shown = true
 end

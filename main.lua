@@ -6,22 +6,22 @@ local statusText
 function love.load()
     love.window.setTitle('ne0luv panel refactor playground')
 
-    local title = ne0luv.Text(ne0luv.Rect(0, 0, 280, 24), {
+    local title = ne0luv.Text({ x = 0, y = 0, w = 280, h = 24 }, {
         text = 'Panel local coordinates demo'
     })
 
-    statusText = ne0luv.Text(ne0luv.Rect(0, 32, 280, 24), {
+    statusText = ne0luv.Text({ x = 0, y = 32, w = 280, h = 24 }, {
         text = 'Click the button or drag the slider'
     })
 
-    local button = ne0luv.Button(ne0luv.Rect(0, 64, 180, 32), {
+    local button = ne0luv.Button({ x = 0, y = 64, w = 180, h = 32 }, {
         text = 'Activate',
         onActivate = function()
             statusText:setText('Button activated')
         end
     })
 
-    local slider = ne0luv.Slider(ne0luv.Rect(0, 112, 220, 24), {
+    local slider = ne0luv.Slider({ x = 0, y = 112, w = 220, h = 24 }, {
         minValue = 0,
         maxValue = 100,
         currentValue = 25
@@ -31,7 +31,7 @@ function love.load()
         statusText:setText(string.format('Slider value: %.0f', value))
     end)
 
-    root = ne0luv.Layout(ne0luv.Rect(100, 100, 280, 180), {
+    root = ne0luv.Layout({ x = 100, y = 100, w = 280, h = 180 }, {
         layout = 'column',
         bgColor = { 0.1, 0.1, 0.1, 0.85 }
     })

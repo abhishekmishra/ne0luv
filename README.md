@@ -23,6 +23,7 @@ Simple utility class that represents a rectangular area initialized with four ar
 
 - The `Panel` class is the parent class of all UI classes.
 - Each `Panel` owns a `Rect` that defines its position and bounds.
+- Panel constructors accept either a `Rect` or a named rect table like `{ x = 10, y = 10, w = 50, h = 50 }`.
 - `Panel:draw()` translates the Love2D transform to the panel origin before drawing.
 - Subclasses implement `_draw()` in panel-local coordinates, with `(0, 0)` at the panel's top-left.
 - Each `Panel` can have a parent panel. The top-level `Panel` has no parent.
