@@ -31,27 +31,10 @@ function Layout:addChild(c)
     c:setParent(self)
 
     self:reflow()
-
-    -- -- set the position of the child based on layout, and the size of the children
-
-    -- -- if layout is row
-    -- if self.layout == 'row' then
-    --     local startPos = 0
-    --     for _, child in ipairs(self.children) do
-    --         child:setX(startPos)
-    --         child:setY(0)
-    --         startPos = startPos + child:getWidth()
-    --     end
-    -- else -- layout is column
-    --     local startPos = 0
-    --     for _, child in ipairs(self.children) do
-    --         child:setX(0)
-    --         child:setY(startPos)
-    --         startPos = startPos + child:getHeight()
-    --     end
-    -- end
 end
 
+--- set the position of the child based on layout
+-- and the size of the children
 function Layout:reflow()
 end
 
