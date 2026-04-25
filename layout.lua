@@ -1,3 +1,7 @@
+--- Base class of ne0luv Layout classes
+-- `Layout` defines the layout as a container of UI components
+--
+-- @classmod Layout
 local module_name = ...
 local root = assert(module_name:match("^(.*)%.layout$"))
 
@@ -11,8 +15,8 @@ local Layout = Class('Layout', Panel)
 function Layout:initialize(rect, config)
     Panel.initialize(self, rect)
     self.config = config or {}
-    -- Default layout is row
-    self.layout = self.config.layout or 'row'
+    -- -- Default layout is row
+    -- self.layout = self.config.layout or 'row'
     -- Default fill color is black
     self.bgColor = self.config.bgColor or { 0, 0, 0, 1 }
     -- Initialize an empty table for child components
@@ -26,24 +30,29 @@ function Layout:addChild(c)
     -- Set the parent of the child to this layout
     c:setParent(self)
 
-    -- set the position of the child based on layout, and the size of the children
+    self:reflow()
 
-    -- if layout is row
-    if self.layout == 'row' then
-        local startPos = 0
-        for _, child in ipairs(self.children) do
-            child:setX(startPos)
-            child:setY(0)
-            startPos = startPos + child:getWidth()
-        end
-    else -- layout is column
-        local startPos = 0
-        for _, child in ipairs(self.children) do
-            child:setX(0)
-            child:setY(startPos)
-            startPos = startPos + child:getHeight()
-        end
-    end
+    -- -- set the position of the child based on layout, and the size of the children
+
+    -- -- if layout is row
+    -- if self.layout == 'row' then
+    --     local startPos = 0
+    --     for _, child in ipairs(self.children) do
+    --         child:setX(startPos)
+    --         child:setY(0)
+    --         startPos = startPos + child:getWidth()
+    --     end
+    -- else -- layout is column
+    --     local startPos = 0
+    --     for _, child in ipairs(self.children) do
+    --         child:setX(0)
+    --         child:setY(startPos)
+    --         startPos = startPos + child:getHeight()
+    --     end
+    -- end
+end
+
+function Layout:reflow()
 end
 
 function Layout:setX(x)

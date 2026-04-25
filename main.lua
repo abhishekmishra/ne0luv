@@ -31,8 +31,7 @@ function love.load()
         statusText:setText(string.format('Slider value: %.0f', value))
     end)
 
-    root = ne0luv.Layout({ x = 100, y = 100, w = 280, h = 180 }, {
-        layout = 'column',
+    root = ne0luv.ColumnLayout({ x = 100, y = 100, w = 280, h = 180 }, {
         bgColor = { 0.1, 0.1, 0.1, 0.85 }
     })
 

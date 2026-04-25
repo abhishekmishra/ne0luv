@@ -9,5 +9,6 @@ ne0luv.Text = require(root .. ".text")
 ne0luv.Button = require(root .. ".button")
 ne0luv.Slider = require(root .. ".slider")
 ne0luv.Layout = require(root .. ".layout")
+ne0luv.ColumnLayout = require(root .. ".columnlayout")
 
 return ne0luv
