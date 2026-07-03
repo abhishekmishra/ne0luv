@@ -1,20 +1,21 @@
----
+--- The design of this Class borrows heavily from the Sample Vector implemtation
+-- in Love2d Docs, as well as the Vector API in p5.js. As a reault, the
+-- implementation is straighforward and provides the most common operations on
+-- Vector.
+-- The implementation prioritises simplicity.
+-- The Vector implementation provides just one public export, the Vector class.
+-- This class is written using the middleclass library.
+--
 -- @author Abhishek Mishra
 -- @license MIT
 -- @copyright Neokaal Tech Private Limited, 2026
 -- @classmod Vector
---[[
-The design of this program borrows heavily from the Sample Vector implemtation in Love2d Docs, as well as the Vector API in p5.js. As a reault, the implementation is straighforward and provides the most common operations on Vector. The implementation prioritises simplicity.
-
-The Vector implementation provides just one public export, the Vector class. This class is written using the middleclass library.
---]]
 
 local root = (...):match("^(.*)%.[^.]+$")
 
 local Class = require(root .. '.middleclass')
 
 --- Vector class
--- (adapted from an older version I'd written)
 local Vector = Class('Vector')
 
 --- constructor
