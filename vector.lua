@@ -1,4 +1,5 @@
---- The design of this Class borrows heavily from the Sample Vector implemtation
+--- A 2D/3D Vector type.
+--The design of this Class borrows heavily from the Sample Vector implemtation
 -- in Love2d Docs, as well as the Vector API in p5.js. As a reault, the
 -- implementation is straighforward and provides the most common operations on
 -- Vector.
